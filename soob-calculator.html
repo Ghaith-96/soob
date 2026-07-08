@@ -1622,6 +1622,18 @@ function revealResults(){
   _renderRevealedRecs(_lastRecs);
 }
 
+function _statBlock(){
+  return `
+    <div style="margin-top:16px;background:#fefce8;border:2px solid #facc15;border-radius:20px;padding:28px 24px;display:flex;align-items:flex-start;gap:16px">
+      <span style="font-size:40px;flex-shrink:0">💡</span>
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#92400e;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">معلومة مهمة</div>
+        <div style="font-size:18px;font-weight:800;color:#78350f;line-height:1.6">هل تعلم أن متوسط إنفاق الشخص في السعودية على باقات الجوال يبلغ 2,200 ريال في السنة 📊</div>
+      </div>
+    </div>
+  `;
+}
+
 function _renderRevealedRecs(recs){
   const lst=document.getElementById('recommendationsList');
   const band=document.getElementById('savingsBandContent');
@@ -1679,6 +1691,7 @@ function _renderRevealedRecs(recs){
     } else {
       lst.innerHTML='';
     }
+    lst.insertAdjacentHTML('beforeend', _statBlock());
     return;
   }
 
@@ -1798,13 +1811,7 @@ function _renderRevealedRecs(recs){
         <button class="btn-switch" onclick="doSwitch('${r.rec.name}','${r.rec.operator}')">${isOver ? 'أبي أرقّي باقتي ←' : 'أبي أحوّل ←'}</button>
         <button class="btn-keep" onclick="doKeep('${r.line.id}','${r.rec.name}','${r.rec.price}')">أحافظ رقمي + ضيف خط جديد</button>
       </div>
-      <div style="margin-top:16px;background:#fefce8;border:2px solid #facc15;border-radius:20px;padding:28px 24px;display:flex;align-items:flex-start;gap:16px">
-        <span style="font-size:40px;flex-shrink:0">💡</span>
-        <div>
-          <div style="font-size:13px;font-weight:800;color:#92400e;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">معلومة مهمة</div>
-          <div style="font-size:18px;font-weight:800;color:#78350f;line-height:1.6">هل تعلم أن متوسط إنفاق الشخص في السعودية على باقات الجوال يبلغ 2,200 ريال في السنة؟ 📊</div>
-        </div>
-      </div>
+      ${_statBlock()}
     </div>
   `;
   }
