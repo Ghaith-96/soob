@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>صوب — وش تبي تجرب اليوم؟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sunset:#ff7a3d;--deep:#5b3fa6;--gold:#e0a458;
+  --black:#191919;--white:#fcf7f1;--paper:#e7ddd1;
+  --border:2px solid #191919;
+  --shadow:5px 5px 0 #191919;
+  --shadow-lg:7px 7px 0 #191919;
+  --shadow-sm:3px 3px 0 #191919;
+}
+body{
+  font-family:'Cairo',sans-serif;
+  background:#f5f3ee;
+  background-image:
+    linear-gradient(rgba(180,170,158,.35) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(180,170,158,.35) 1px,transparent 1px);
+  background-size:32px 32px;
+  min-height:100vh;color:var(--black);
+}
+
+/* HEADER */
+header{
+  border-bottom:var(--border);background:#f5f3ef;
+  padding:14px 40px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+}
+.logo{font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1}
+.logo .dot{color:var(--sunset)}
+.tagline{font-size:12px;color:var(--deep);font-weight:700;margin-top:3px}
+.header-link{
+  font-size:13px;color:#fff;text-decoration:none;font-weight:800;
+  border:var(--border);padding:8px 20px;border-radius:999px;
+  background:var(--black);box-shadow:var(--shadow-sm);
+  transition:transform .1s,box-shadow .1s;
+}
+.header-link:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow)}
+
+/* HERO */
+.hero{
+  padding:80px 28px 64px;text-align:center;
+  border-bottom:var(--border);
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:800;
+  background:#4ade80;color:var(--black);
+  padding:8px 22px;border-radius:999px;border:var(--border);
+  box-shadow:var(--shadow-sm);margin-bottom:24px;
+}
+.hero-title{
+  font-size:64px;font-weight:900;line-height:1.1;
+  color:var(--black);margin-bottom:14px;letter-spacing:-2px;
+}
+.hero-title .accent{color:var(--sunset)}
+.hero-sub{font-size:17px;color:#666;max-width:440px;margin:0 auto;line-height:1.7}
+
+/* CARDS GRID */
+.cards-section{max-width:1020px;margin:0 auto;padding:72px 28px 96px}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+.exp-card{
+  border:var(--border);box-shadow:var(--shadow);border-radius:20px;
+  background:#fff;padding:36px 28px;
+  display:flex;flex-direction:column;
+  cursor:pointer;text-decoration:none;color:var(--black);
+  transition:transform .14s,box-shadow .14s;position:relative;overflow:hidden;
+}
+.exp-card:hover{transform:translate(-4px,-4px);box-shadow:var(--shadow-lg)}
+.exp-card:active{transform:translate(2px,2px);box-shadow:none}
+
+.exp-card.card-compare{background:#fff}
+.exp-card.card-ai{background:var(--deep);color:#fff}
+.exp-card.card-quiz{background:var(--gold)}
+
+.card-icon{font-size:48px;margin-bottom:20px;display:block}
+.card-badge{
+  display:inline-flex;align-items:center;
+  font-size:11px;font-weight:800;letter-spacing:.5px;
+  padding:5px 14px;border-radius:999px;border:var(--border);
+  margin-bottom:14px;
+}
+.card-compare .card-badge{background:var(--paper)}
+.card-ai .card-badge{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4)}
+.card-quiz .card-badge{background:rgba(255,255,255,.5)}
+
+.card-title{font-size:22px;font-weight:900;margin-bottom:10px;letter-spacing:-.5px}
+.card-desc{font-size:14px;line-height:1.7;opacity:.75;flex:1;margin-bottom:28px}
+.card-ai .card-desc{opacity:.7;color:#fff}
+
+.card-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:800;
+  border:var(--border);padding:12px 22px;border-radius:999px;
+  transition:transform .1s,box-shadow .1s;
+  align-self:flex-start;
+}
+.card-compare .card-cta{background:var(--sunset);color:#fff;box-shadow:var(--shadow-sm)}
+.card-ai .card-cta{background:#fff;color:var(--deep);box-shadow:var(--shadow-sm)}
+.card-quiz .card-cta{background:var(--black);color:#fff;box-shadow:var(--shadow-sm)}
+
+.exp-card:hover .card-cta{transform:translate(-2px,-2px);box-shadow:var(--shadow)}
+
+.coming-soon-tag{
+  position:absolute;top:18px;left:18px;
+  font-size:11px;font-weight:800;
+  background:#fff;color:var(--deep);
+  border:var(--border);padding:4px 12px;border-radius:999px;
+  box-shadow:var(--shadow-sm);
+}
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  .cards-grid{grid-template-columns:1fr}
+  .hero-title{font-size:40px;letter-spacing:-1px}
+  header{padding:12px 20px}
+  .cards-section{padding:48px 20px 72px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">صـ<span class="dot">وب</span></div>
+    <div class="tagline">صوّبنا لك</div>
+  </div>
+  <a href="#" class="header-link">soob.com</a>
+</header>
+
+<section class="hero">
+  <div class="hero-pill">👋 أهلاً بك في صوب</div>
+  <h1 class="hero-title">
+    وش تبي<br>
+    <span class="accent">تجرب اليوم؟</span>
+  </h1>
+  <p class="hero-sub">اختار من الخدمات اللي تناسبك وصوب يصوّبلك الطريق</p>
+</section>
+
+<div class="cards-section">
+  <div class="cards-grid">
+
+    <!-- COMPARE PLANS -->
+    <a class="exp-card card-compare" href="#">
+      <span class="card-icon">📊</span>
+      <span class="card-badge">حاسبة الباقات</span>
+      <div class="card-title">قارن الباقات</div>
+      <div class="card-desc">لو ما تقدر تختار بين باقتين، نقدر نساعدك في ذلك</div>
+      <span class="card-cta">ابدأ المقارنة ←</span>
+    </a>
+
+    <!-- AI PLAN FINDER -->
+    <a class="exp-card card-ai" href="#">
+      <div class="coming-soon-tag">✨ قريباً</div>
+      <span class="card-icon">🤖</span>
+      <span class="card-badge">مدعوم بالذكاء الاصطناعي</span>
+      <div class="card-title">AI Plan Finder</div>
+      <div class="card-desc">اوصفلنا استخدامك بكلماتك وصوب الذكي يلاقيلك أنسب باقة من كل المشغّلين</div>
+      <span class="card-cta">جرب الان ←</span>
+    </a>
+
+    <!-- SOOB QUIZ -->
+    <a class="exp-card card-quiz" href="soob-calculator.html">
+      <span class="card-icon">🎯</span>
+      <span class="card-badge">اختبار سريع</span>
+      <div class="card-title">اعرف اذا انت على افضل باقة</div>
+      <div class="card-desc">جاوب على أسئلة بسيطة عن استخدامك وصوب يحكم إذا أنت على أفضل باقة أو لا</div>
+      <span class="card-cta">ابدأ الاختبار ←</span>
+    </a>
+
+  </div>
+</div>
+
+</body>
+</html>

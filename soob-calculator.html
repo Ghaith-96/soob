@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صوب — حنّا صوبك</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sunset:#ff7a3d;
+  --deep:#5b3fa6;
+  --gold:#e0a458;
+  --black:#191919;
+  --white:#fcf7f1;
+  --paper:#e7ddd1;
+  --border:2px solid #191919;
+  --radius:18px;
+  --shadow:5px 5px 0 #191919;
+  --shadow-lg:7px 7px 0 #191919;
+  --shadow-sm:3px 3px 0 #191919;
+}
+body{
+  font-family:'Cairo',sans-serif;
+  background:#f5f3ee;
+  color:var(--black);
+  min-height:100vh;
+  direction:rtl;
+  background-image:
+    linear-gradient(rgba(180,170,158,.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,170,158,.35) 1px, transparent 1px);
+  background-size:32px 32px;
+}
+
+/* ===== HEADER ===== */
+header{
+  border-bottom:var(--border);background:#f5f3ef;
+  padding:14px 40px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+}
+.logo{font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1;color:var(--black)}
+.logo .dot{color:var(--sunset)}
+.tagline{font-size:12px;color:var(--deep);font-weight:700;margin-top:3px;letter-spacing:.3px}
+.header-link{
+  font-size:13px;color:#fff;text-decoration:none;font-weight:800;
+  border:var(--border);padding:8px 20px;border-radius:999px;
+  background:var(--black);box-shadow:var(--shadow-sm);
+  transition:transform .1s,box-shadow .1s;letter-spacing:.3px;
+}
+.header-link:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow)}
+
+
+/* ===== LINES GRID ===== */
+.lines-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;margin-bottom:32px}
+
+.empty-state{
+  border:2px dashed #c0b8ae;
+  border-radius:var(--radius);
+  padding:64px 24px;
+  text-align:center;color:#aaa;margin-bottom:28px;
+  background:rgba(255,255,255,.6);
+}
+.empty-icon{font-size:52px;margin-bottom:14px}
+.empty-text{font-size:17px;font-weight:800;color:#666}
+.empty-sub{font-size:13px;margin-top:6px;color:#bbb}
+
+/* ===== LINE CARD ===== */
+.line-card{
+  border:var(--border);box-shadow:var(--shadow);
+  border-radius:var(--radius);
+  background:#fff;padding:22px;position:relative;
+  transition:transform .12s,box-shadow .12s;
+}
+.line-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
+.lc-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.lc-icon{
+  width:44px;height:44px;border:var(--border);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  background:var(--paper);flex-shrink:0;
+}
+.lc-type{font-size:11px;font-weight:800;color:var(--deep);letter-spacing:.5px;text-transform:uppercase}
+.lc-op{font-size:13px;font-weight:600;color:#888;margin-bottom:3px}
+.lc-name{font-size:16px;font-weight:900;margin-bottom:10px}
+.lc-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.badge{
+  background:var(--paper);border:var(--border);
+  padding:3px 12px;font-size:11px;font-weight:800;
+  border-radius:999px;
+}
+.badge.green{background:#d1fae5;border-color:#059669;color:#065f46}
+.lc-price{font-size:28px;font-weight:900}
+.lc-price small{font-size:13px;font-weight:400;color:#888}
+.lc-actions{display:flex;gap:8px;margin-top:16px}
+.btn-sm{
+  flex:1;border:var(--border);padding:9px;border-radius:999px;
+  font-family:'Cairo',sans-serif;font-size:13px;font-weight:800;cursor:pointer;
+  background:transparent;transition:background .1s,transform .1s,box-shadow .1s;
+}
+.btn-sm:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow-sm)}
+.btn-del{background:#fff0f0;color:#b91c1c;border-color:#b91c1c}
+.btn-del:hover{background:#fee2e2}
+
+
+
+
+/* ===== PAGE SECTIONS ===== */
+.page-section{max-width:960px;margin:0 auto;padding:72px 28px}
+
+/* ===== SECTION HEADER PATTERN ===== */
+.section-header{text-align:center;margin-bottom:48px}
+.sec-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:800;letter-spacing:.4px;
+  padding:7px 20px;border-radius:999px;border:var(--border);
+  box-shadow:var(--shadow-sm);margin-bottom:20px;
+}
+.sec-pill.purple{background:var(--deep);color:#fff}
+.sec-pill.gold{background:var(--gold);color:var(--black)}
+.sec-pill.sunset{background:var(--sunset);color:#fff}
+.sec-pill.green{background:#4ade80;color:var(--black)}
+.section-heading{font-size:48px;font-weight:900;line-height:1.15;color:var(--black);margin-bottom:14px;letter-spacing:-1px}
+.section-heading .accent{color:var(--sunset)}
+.section-heading .accent-deep{color:var(--deep)}
+.section-subtext{font-size:16px;color:#666;max-width:520px;margin:0 auto;line-height:1.7}
+
+/* ===== HERO ===== */
+.hero{
+  padding:88px 28px 80px;text-align:center;
+  border-bottom:var(--border);
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:800;letter-spacing:.4px;
+  background:#4ade80;color:var(--black);
+  padding:8px 22px;border-radius:999px;border:var(--border);
+  box-shadow:var(--shadow-sm);margin-bottom:24px;
+}
+.hero-title{
+  font-size:64px;font-weight:900;line-height:1.1;
+  color:var(--black);margin-bottom:18px;letter-spacing:-2px;
+}
+.hero-title .accent{color:var(--sunset)}
+.hero-sub{font-size:17px;color:#666;max-width:480px;margin:0 auto 36px;line-height:1.7}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-hero-primary{
+  background:var(--sunset);color:#fff;
+  border:var(--border);box-shadow:var(--shadow);border-radius:999px;
+  padding:16px 32px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;
+  cursor:pointer;transition:transform .12s,box-shadow .12s;
+}
+.btn-hero-primary:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg)}
+.btn-hero-secondary{
+  background:#fff;color:var(--black);
+  border:var(--border);box-shadow:var(--shadow-sm);border-radius:999px;
+  padding:16px 32px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;transition:transform .12s,box-shadow .12s;
+}
+.btn-hero-secondary:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow);background:var(--paper)}
+
+/* ===== SAVINGS BAND ===== */
+.savings-band{
+  background:var(--deep);border-bottom:var(--border);
+  padding:56px 24px 48px;text-align:center;position:relative;overflow:hidden;
+}
+.savings-band::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.savings-band-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:800;color:var(--black);
+  background:var(--gold);border:var(--border);
+  padding:7px 20px;border-radius:999px;box-shadow:var(--shadow-sm);
+  margin-bottom:20px;position:relative;
+}
+.savings-amount{
+  font-size:96px;font-weight:900;color:#fff;
+  line-height:1;direction:ltr;font-variant-numeric:tabular-nums;
+  transition:color .3s;position:relative;letter-spacing:-3px;
+}
+.savings-amount.active{color:#6ee7b7}
+.savings-unit{color:rgba(252,247,241,.8);font-size:17px;font-weight:700;margin-top:8px;position:relative}
+.savings-sub{color:rgba(231,221,209,.65);font-size:14px;margin-top:8px;position:relative}
+
+/* ===== SECTION DIVIDER ===== */
+.sec-divider{
+  border:none;border-top:var(--border);
+  margin:0;position:relative;
+}
+
+/* ===== ADD BUTTON ===== */
+.btn-add{
+  width:100%;background:var(--sunset);color:#fff;
+  border:var(--border);box-shadow:var(--shadow);border-radius:999px;
+  padding:20px 32px;font-family:'Cairo',sans-serif;
+  font-size:18px;font-weight:900;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  gap:10px;margin-bottom:32px;transition:transform .12s,box-shadow .12s;
+}
+.btn-add:hover{transform:translate(-3px,-3px);box-shadow:var(--shadow-lg)}
+.btn-add:active{transform:translate(2px,2px);box-shadow:none}
+
+/* ===== LINES GRID ===== */
+.lines-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;margin-bottom:0}
+.empty-state{
+  border:2px dashed #c8c0b4;border-radius:20px;
+  padding:72px 24px;text-align:center;color:#aaa;
+  background:rgba(255,255,255,.55);
+}
+.empty-icon{font-size:52px;margin-bottom:14px}
+.empty-text{font-size:17px;font-weight:800;color:#888}
+.empty-sub{font-size:13px;margin-top:6px;color:#bbb}
+
+/* ===== LINE CARD ===== */
+.line-card{
+  border:var(--border);box-shadow:var(--shadow);border-radius:20px;
+  background:#fff;padding:22px;position:relative;
+  transition:transform .12s,box-shadow .12s;
+}
+.line-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
+.lc-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.lc-icon{width:44px;height:44px;border:var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--paper);flex-shrink:0}
+.lc-type{font-size:11px;font-weight:800;color:var(--deep);letter-spacing:.5px;text-transform:uppercase}
+.lc-op{font-size:13px;font-weight:600;color:#888;margin-bottom:3px}
+.lc-name{font-size:16px;font-weight:900;margin-bottom:10px}
+.lc-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.badge{background:var(--paper);border:var(--border);padding:3px 12px;font-size:11px;font-weight:800;border-radius:999px}
+.badge.green{background:#d1fae5;border-color:#059669;color:#065f46}
+.lc-price{font-size:28px;font-weight:900}
+.lc-price small{font-size:13px;font-weight:400;color:#888}
+.lc-actions{display:flex;gap:8px;margin-top:16px}
+.btn-sm{flex:1;border:var(--border);padding:9px;border-radius:999px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:800;cursor:pointer;background:transparent;transition:all .1s}
+.btn-sm:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow-sm)}
+.btn-del{background:#fff0f0;color:#b91c1c;border-color:#b91c1c}
+.btn-del:hover{background:#fee2e2}
+
+/* ===== ANALYSIS SPLIT CARD ===== */
+.analysis-split-card{
+  border:var(--border);box-shadow:var(--shadow-lg);border-radius:20px;
+  background:var(--gold);overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.analysis-left{padding:32px;border-left:var(--border)}
+.analysis-right{
+  padding:32px;display:flex;align-items:center;justify-content:center;
+  background:var(--gold);
+}
+.analysis-visual{text-align:center}
+.av-icon{font-size:64px;margin-bottom:12px}
+.av-text{font-size:22px;font-weight:900;color:var(--black);line-height:1.3}
+.analysis-title{font-size:18px;font-weight:900;margin-bottom:18px}
+.question-card{border:var(--border);background:#fff;border-radius:14px;padding:18px;margin-bottom:12px}
+.q-label{font-size:15px;font-weight:800;margin-bottom:12px}
+.q-options{display:flex;gap:8px;flex-wrap:wrap}
+.q-opt{border:var(--border);padding:8px 18px;cursor:pointer;background:#fff;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;border-radius:999px;transition:all .12s}
+.q-opt:hover{background:var(--paper);transform:translate(-1px,-1px);box-shadow:var(--shadow-sm)}
+.q-opt.active{background:var(--deep);color:#fff;box-shadow:var(--shadow-sm);transform:translate(-1px,-1px)}
+
+/* ===== RECOMMENDATIONS ===== */
+.rec-card{border:var(--border);box-shadow:var(--shadow);border-radius:20px;background:#fff;padding:26px;margin-bottom:20px}
+.rec-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:12px}
+.rec-title{font-size:16px;font-weight:900}
+.rec-sub{font-size:12px;color:#888;margin-top:3px}
+.rec-badge{background:var(--sunset);color:#fff;padding:5px 16px;font-size:12px;font-weight:800;border:var(--border);border-radius:999px;white-space:nowrap;flex-shrink:0;box-shadow:var(--shadow-sm)}
+.rec-plans{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:16px}
+.rec-plan{border:var(--border);padding:16px;border-radius:14px}
+.rec-plan.cur{background:var(--paper)}
+.rec-plan.best{background:#f0fdf4;box-shadow:var(--shadow)}
+.rp-label{font-size:11px;font-weight:700;color:#999;margin-bottom:4px}
+.rp-op{font-size:12px;color:#777;margin-bottom:4px}
+.rp-name{font-size:14px;font-weight:900;margin-bottom:8px}
+.rp-price{font-size:26px;font-weight:900}
+.rp-price.red{color:#b91c1c}
+.rp-price.green{color:#059669}
+.rp-price.orange{color:#b45309}
+.rec-arrow{font-size:24px;color:var(--deep);text-align:center}
+.savings-bar{background:var(--deep);color:var(--gold);padding:16px 20px;display:flex;border-radius:14px;align-items:center;justify-content:space-between;margin-bottom:16px;border:var(--border)}
+.sb-label{font-size:13px;opacity:.85}
+.sb-amount{font-size:26px;font-weight:900}
+.reason-box{background:var(--paper);border:var(--border);padding:16px;margin-bottom:16px;border-radius:14px}
+.reason-title{font-size:11px;font-weight:800;margin-bottom:10px;color:#777;text-transform:uppercase;letter-spacing:.6px}
+.reason-item{font-size:13px;margin-bottom:5px;display:flex;gap:6px}
+.rec-cta{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-switch{background:var(--sunset);color:#fff;border:var(--border);box-shadow:var(--shadow);border-radius:999px;padding:14px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.btn-switch:hover{box-shadow:var(--shadow-lg);transform:translate(-2px,-2px)}
+.btn-keep{background:#fff;border:var(--border);padding:14px;border-radius:999px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .1s}
+.btn-keep:hover{background:var(--paper);transform:translate(-1px,-1px);box-shadow:var(--shadow-sm)}
+.good-card{border:var(--border);padding:40px;text-align:center;background:#f0fdf4;border-radius:20px;box-shadow:var(--shadow);margin-bottom:20px}
+
+/* ===== OFFER CARD ===== */
+.offer-card{
+  border:var(--border);box-shadow:var(--shadow-lg);border-radius:20px;
+  background:var(--deep);color:#fff;padding:56px 40px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.offer-card::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.offer-soon{display:inline-block;font-size:12px;font-weight:800;color:var(--black);background:var(--gold);border:var(--border);padding:6px 18px;border-radius:999px;box-shadow:var(--shadow-sm);margin-bottom:18px;position:relative}
+.offer-title{font-size:36px;font-weight:900;margin-bottom:12px;position:relative}
+.offer-sub{font-size:15px;opacity:.7;position:relative}
+
+/* ===== MODAL ===== */
+.overlay{position:fixed;inset:0;background:rgba(25,25,25,.78);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:#f5f3ee;border:var(--border);border-bottom:none;border-radius:24px 24px 0 0;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;padding:32px 28px 48px}
+.modal-title{font-size:22px;font-weight:900;margin-bottom:26px}
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.type-btn{border:var(--border);padding:26px 12px;text-align:center;border-radius:16px;cursor:pointer;background:#fff;font-family:'Cairo',sans-serif;transition:all .12s}
+.type-btn:hover,.type-btn.active{background:var(--sunset);color:#fff;box-shadow:var(--shadow);transform:translate(-2px,-2px)}
+.tb-icon{font-size:36px;display:block;margin-bottom:10px}
+.tb-label{font-size:14px;font-weight:800}
+.op-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:24px}
+.op-btn{border:var(--border);padding:14px;text-align:center;border-radius:14px;cursor:pointer;background:#fff;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;transition:all .12s}
+.op-btn:hover,.op-btn.active{background:var(--deep);color:#fff;box-shadow:var(--shadow);transform:translate(-1px,-1px)}
+.plan-list{max-height:320px;overflow-y:auto;margin-bottom:18px;border:var(--border);border-radius:16px;overflow:hidden}
+.plan-item{border-bottom:1.5px solid #e5ddd5;padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background .1s}
+.plan-item:last-child{border-bottom:none}
+.plan-item:hover,.plan-item.active{background:var(--paper)}
+.plan-item.active{border-right:4px solid var(--sunset)}
+.pi-name{font-size:14px;font-weight:800;margin-bottom:3px}
+.pi-details{font-size:12px;color:#888}
+.pi-price{font-size:19px;font-weight:900;color:var(--deep);white-space:nowrap;margin-right:12px}
+.form-group{margin-bottom:20px}
+.form-label{font-size:14px;font-weight:700;margin-bottom:8px;display:block}
+.opt-tag{font-size:12px;font-weight:400;color:#999}
+.form-input{width:100%;border:var(--border);padding:12px 16px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:15px;background:#fff}
+.form-hint{font-size:12px;color:#bbb;margin-top:5px}
+.selected-plan-preview{border:var(--border);padding:18px;border-radius:16px;background:var(--paper);margin-bottom:22px}
+.sp-op{font-size:13px;color:#888;margin-bottom:3px}
+.sp-name{font-size:18px;font-weight:900;margin-bottom:6px}
+.sp-price{font-size:28px;font-weight:900}
+.btn-confirm{width:100%;background:var(--deep);color:#fff;border:var(--border);box-shadow:var(--shadow);border-radius:999px;padding:16px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;cursor:pointer;margin-top:8px;transition:transform .12s,box-shadow .12s}
+.btn-confirm:hover{box-shadow:var(--shadow-lg);transform:translate(-2px,-2px)}
+.btn-back{width:100%;background:transparent;border:var(--border);padding:12px;border-radius:999px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px}
+.btn-back:hover{background:var(--paper)}
+.keep-info{border:var(--border);background:var(--paper);padding:18px;margin-bottom:16px;border-radius:14px}
+.keep-title{font-size:16px;font-weight:800;margin-bottom:8px}
+.keep-steps{font-size:14px;line-height:2}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:700px){
+  .hero-title{font-size:40px;letter-spacing:-1px}
+  .section-heading{font-size:32px}
+  .savings-amount{font-size:64px}
+  .analysis-split-card{grid-template-columns:1fr}
+  .analysis-right{display:none}
+  .rec-plans{grid-template-columns:1fr}
+  .rec-arrow{transform:rotate(90deg)}
+  .rec-cta{grid-template-columns:1fr}
+  header{padding:12px 20px}
+  .hero{padding:56px 20px 48px}
+  .page-section{padding:48px 20px}
+  .offer-card{padding:36px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div>
+    <div class="logo">صـ<span class="dot">وب</span></div>
+    <div class="tagline">صوّبنا لك</div>
+  </div>
+  <a href="#" class="header-link">soob.com</a>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-pill">📱 حاسبة الباقات</div>
+  <h1 class="hero-title">
+    دفعت أكثر من اللازم؟<br>
+    <span class="accent">خلنا نشوف.</span>
+  </h1>
+</section>
+
+<!-- ===== LINES SECTION ===== -->
+<hr class="sec-divider">
+<section class="page-section" id="linesAnchor">
+  <div class="section-header">
+    <div class="sec-pill sunset">📋 خطوطك</div>
+    <h2 class="section-heading">ضيف خطوطك.<br><span class="accent">وشوف وين فلوسك رايحة.</span></h2>
+    <p class="section-subtext">ضيف كل خطوطك — موبايل، فايبر، أو راوتر — وصوب يشوفلك وين تقدر توفّر</p>
+  </div>
+
+  <button class="btn-add" onclick="openModal()">
+    <span style="font-size:22px">+</span>
+    <span>ضيف خط جديد</span>
+  </button>
+
+  <div id="linesSection">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">📱</div>
+      <div class="empty-text">ما ضفت شي بعد</div>
+      <div class="empty-sub">ضيف خطوطك وخلنا نشوفلك الأوفر</div>
+    </div>
+    <div class="lines-grid" id="linesGrid"></div>
+  </div>
+</section>
+
+<!-- ===== ANALYSIS SECTION ===== -->
+<div id="analysisSection" style="display:none">
+  <hr class="sec-divider">
+  <section class="page-section">
+    <div class="section-header">
+      <div class="sec-pill gold">🤔 سؤالين بس</div>
+      <h2 class="section-heading">نسألك سؤالين.<br><span class="accent-deep">وبعدين نجيبلك الأفضل.</span></h2>
+    </div>
+    <div class="analysis-split-card">
+      <div class="analysis-left">
+        <div class="analysis-title">جاوب عشان نضبّطلك التوصية</div>
+        <div id="analysisQuestions"></div>
+      </div>
+      <div class="analysis-right">
+        <div class="analysis-visual">
+          <div class="av-icon">🎯</div>
+          <div class="av-text">صوب يحلّل<br>ويوفّرلك</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="recommendationsSection" style="display:none">
+    <hr class="sec-divider">
+    <section class="page-section">
+      <div class="section-header">
+        <div class="sec-pill purple">💡 لقينالك</div>
+        <h2 class="section-heading">الباقة الأوفر لك.<br><span class="accent">بناءً على استخدامك الفعلي.</span></h2>
+      </div>
+      <div class="savings-band" style="border-radius:20px;border:var(--border);margin-bottom:32px">
+        <div id="savingsStatusBadge"></div>
+        <div class="savings-band-pill">💰 كم بتوفّر في السنة</div>
+        <div id="savingsBandContent">
+          <div style="text-align:center;padding:16px 0 8px">
+            <button class="btn-hero-primary" onclick="revealResults()" style="font-size:17px;padding:18px 40px">
+              اكشف نتيجتك ←
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="recommendationsList"></div>
+    </section>
+  </div>
+</div>
+
+<!-- ===== OFFER CTA ===== -->
+<hr class="sec-divider">
+<section class="page-section">
+  <div class="offer-card">
+    <div class="offer-soon">✨ قريباً</div>
+    <div class="offer-title">باقة صوب الخاصة</div>
+    <div class="offer-sub">خصم ٥٠٪ على أول شهر — نعلن عنها قريباً</div>
+  </div>
+</section>
+
+<!-- ===== MODAL ===== -->
+<div class="overlay" id="modal" style="display:none" onclick="overlayClick(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-title" id="modalTitle"></div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const PLANS = [
+{category:"Mobile",operator:"STC",name:"Sawa Hero",price:414,duration:"Monthly",data:"Unlimited",socialData:"Unlimited",minutes:"Unlimited (all-net) + SMS",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Star Plus",price:276,duration:"Monthly",data:120,socialData:"Unlimited",minutes:"1510 (all-net)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Star",price:253,duration:"Monthly",data:104,socialData:"Unlimited",minutes:"Unlimited on STC network + 0.55/min local calls",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Post Plus",price:195.5,duration:"Monthly",data:70,socialData:"Unlimited",minutes:"Unlimited on-net + 510 all-net",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Post",price:184,duration:"Monthly",data:67,socialData:"Unlimited",minutes:"Unlimited on STC network + 0.55/min local calls",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa 175",price:201.25,duration:"Monthly",data:85,socialData:"Unlimited",minutes:"1100.0",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa 150",price:172.5,duration:"Monthly",data:70,socialData:"Unlimited",minutes:"1200 (all-net)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa 120",price:138,duration:"Monthly",data:45,socialData:"Unlimited WhatsApp/Snapchat/Facebook",minutes:"1200 (all-net)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa 50",price:57.5,duration:"Monthly",data:2,socialData:2,minutes:"300.0",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Share",price:126.5,duration:"Monthly",data:40,socialData:45,minutes:"1000.0",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Share Plus",price:132.25,duration:"Monthly",data:40,socialData:"55 GB",minutes:"1500 (all-net)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Captain",price:97.75,duration:"Monthly",data:22,socialData:"Unlimited WhatsApp & Google Maps",minutes:"650 (all-net)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Like",price:69,duration:"Monthly",data:7,socialData:7,minutes:"550 on STC network + 0.55/min local calls",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Like Plus (website)",price:86.25,duration:"Monthly",data:20,socialData:"20 GB",minutes:"510 (all-net)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Like Plus (App)",price:80.5,duration:"Monthly",data:15,socialData:15,minutes:"550 (all-net)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Like Plus 3 Months",price:258.75,duration:"3 Months",data:50,socialData:45,minutes:"1600.0",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Basic 3 Months",price:103.5,duration:"3 Months",data:3,socialData:3,minutes:"300.0",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Mofawtar Basic+",price:90,duration:"Monthly",data:10,socialData:"10 GB",minutes:"300 (on-net)",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Mofawtar 2",price:138,duration:"Monthly",data:25,socialData:"35 GB",minutes:"Unlimited on-net + 200 off-net",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Mofawtar 2+",price:172.5,duration:"Monthly",data:56,socialData:"Unlimited",minutes:"Unlimited on-net + 400 off-net",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Mofawtar 3+",price:239,duration:"Monthly",data:110,socialData:"Unlimited",minutes:"500 (all-net)",paymentType:"Postpaid",benefits:"Intro price (3 mo, new customers); standard 264.5 SR"},
+{category:"Mobile",operator:"STC",name:"Mofawtar Flex",price:332,duration:"Monthly",data:150,socialData:"Unlimited",minutes:null,paymentType:"Postpaid",benefits:"2 GB roaming data + 200 intl minutes. Intro price (3 mo, new customers); standard 370 SR"},
+{category:"Mobile",operator:"STC",name:"Mofawtar 4",price:411,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"Unlimited (all-net)",paymentType:"Postpaid",benefits:"5 GB roaming + 5 GB GCC roaming + 100 roaming voice min + free Multi-SIM + stc tv premium. Discounted from 517.5 SR"},
+{category:"Mobile",operator:"STC",name:"Mofawtar Max",price:920,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Unlimited roaming internet + Multi-SIM (2 free) + device subsidy up to 8,280 SR + stc tv premium"},
+{category:"Mobile",operator:"STC",name:"Mofawtar Pro 1",price:330,duration:"Monthly",data:45,socialData:"Unlimited",minutes:null,paymentType:"Postpaid",benefits:"Free device (up to 3,504 SR)"},
+{category:"Mobile",operator:"STC",name:"Mofawtar Pro 2",price:359,duration:"Monthly",data:115,socialData:"Unlimited",minutes:null,paymentType:"Postpaid",benefits:"Free device (up to 5,616 SR). Discounted from 510 SR"},
+{category:"Mobile",operator:"STC",name:"Mofawtar Pro 3",price:455,duration:"Monthly",data:150,socialData:null,minutes:null,paymentType:"Postpaid",benefits:"2 GB roaming + free device (up to 6,408 SR). Discounted from 660 SR"},
+{category:"Mobile",operator:"STC",name:"Mofawtar Pro 4",price:686,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"5 GB worldwide roaming + 5 GB GCC roaming + free device (up to 6,930 SR). Discounted from 835 SR"},
+{category:"Mobile",operator:"STC",name:"Mofawtar Pro 5",price:760,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Free device (up to 8,280 SR). Discounted from 955 SR"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex Basic",price:40.25,duration:"4 weeks",data:1,socialData:"1 GB",minutes:"100 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 44 destinations"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex 25",price:25,duration:"4 weeks",data:1,socialData:null,minutes:"60 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 44 countries"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex 65",price:74.75,duration:"4 weeks",data:10,socialData:15,minutes:"350 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 44 countries"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex 100",price:115,duration:"4 weeks",data:35,socialData:36,minutes:"1000 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 44 destinations"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex 120",price:138,duration:"4 weeks",data:45,socialData:"Unlimited",minutes:"1200 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 44 destinations"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex 150",price:172.5,duration:"4 weeks",data:55,socialData:"Unlimited",minutes:"1600 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 44 destinations"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex 240",price:276,duration:"4 weeks",data:116,socialData:"Unlimited",minutes:"2000 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 51 destinations"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex 340",price:391,duration:"4 weeks",data:110,socialData:"115 GB",minutes:"1500 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 51 destinations"},
+{category:"Mobile",operator:"STC",name:"Sawa Flex Afghanistan 65",price:74.75,duration:"Monthly",data:5,socialData:"5 GB",minutes:"130 local & international",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Flex Afghanistan 80",price:92,duration:"Monthly",data:10,socialData:10,minutes:"170 local & international minutes",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Flex India Monthly",price:80.5,duration:"Monthly",data:20,socialData:15,minutes:"300 local & international minutes",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Flex Ethiopia 80",price:92,duration:"Monthly",data:5,socialData:10,minutes:"500 local & international minutes",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Sawa Flex Ethiopia 120",price:138,duration:"Monthly",data:20,socialData:20,minutes:"900 local & international minutes",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Flex Bangladesh Monthly",price:80.5,duration:"Monthly",data:20,socialData:15,minutes:"300 local & international minutes",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Flex Syria",price:115,duration:"Monthly",data:15,socialData:15,minutes:"145 local & international minutes",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Flex Sri Lanka",price:115,duration:"Monthly",data:15,socialData:10,minutes:"180 local & international minutes",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Flex SIM 105",price:120.75,duration:"4 weeks",data:35,socialData:45,minutes:"1000 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 16 destinations"},
+{category:"Mobile",operator:"STC",name:"Flex SIM 75",price:86.25,duration:"4 weeks",data:11,socialData:13,minutes:"400 local & international",paymentType:"Prepaid",benefits:"Local & intl calls to 16 destinations"},
+{category:"Mobile",operator:"STC",name:"Flex SIM 45",price:51.75,duration:"4 weeks",data:3,socialData:1,minutes:"250.0",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"STC",name:"Quicknet 5G Unlimited",price:399,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"STC",name:"Quicknet 100GB",price:184,duration:"Monthly",data:100,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"STC",name:"Quicknet 50GB + 15GB",price:115,duration:"Monthly",data:"50 GB",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only + 15GB extra for new customers"},
+{category:"Mobile",operator:"STC",name:"Quicknet 25GB + 10 GB",price:105,duration:"Monthly",data:"25 GB",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only + 10GB extra for new customers"},
+{category:"Mobile",operator:"STC",name:"Quicknet 15GB",price:95,duration:"Monthly",data:15,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Max",price:920,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"736 for first 3 months + stc tv + selection from 4 streaming services (Netflx-DIsney-Thmanyah -MBC Shahid)"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Entertainemnt",price:460,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"368 for first 3 months + Selection of 2 streaming services (Netflx-DIsney-Thmanyah -MBC Shahid)"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Stream",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"322 for first 3 months + Selection from 1 streaming service (Netflx-DIsney-Thmanyah -MBC Shahid)"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Light",price:345,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"276 for first 3 months + stc tv classic subscription"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Basic",price:287.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"230 for first 3 months"},
+{category:"Home Internet",operator:"STC",name:"Baity 5G Unlimited",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity 5G Entertainment",price:353,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"282 first 3 months + free stc tv + free thmanyah"},
+{category:"Home Internet",operator:"STC",name:"Baity 5G Entertainment ESIM",price:282,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"free stc tv + free thmanyah"},
+{category:"Home Internet",operator:"STC",name:"Baity 5G Basic",price:299,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"239 first 3 months + free stc tv"},
+{category:"Home Phone",operator:"STC",name:"Home Phone Plus",price:113.85,duration:"Monthly",data:null,socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity 5G UL Pro",price:696,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"free device with 24 month contract commitment max value 5520 + stc tv"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Stream Pro",price:575,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"free national calls",paymentType:"Postpaid",benefits:"free device with 24 month contract commitment max value 5520 + 1 subscribtion from (Netflx-DIsney-Thmanyah -MBC Shahid)"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Basic Pro",price:460,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"free national calls",paymentType:"Postpaid",benefits:"free device with 24 month contract commitment max value 4140+ stc tv"},
+{category:"Home Internet",operator:"STC",name:"Baity 5G  Max",price:862,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"free device with 24 month contract commitment max value 6900 + shahid vip + shahid sport"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Entertainemnt Pro",price:690,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"free national calls",paymentType:"Postpaid",benefits:"free device with 24 month contract commitment max value 5520 + 2 subscribtions from (Netflx-DIsney-Thmanyah -MBC Shahid)"},
+{category:"Home Internet",operator:"STC",name:"Baity 5G Prepaid 3M",price:1599,duration:"3 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity 5G Prepaid 6M",price:2319,duration:"6 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity 5G Prepaid 12M",price:3865,duration:"12 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber 500Mbps Prepaid 12 Months",price:4830,duration:"14 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber 500Mbps Prepaid 6 Months",price:2415,duration:"7 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber 300Mbps Prepaid 12 Months",price:3448.85,duration:"14 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber 300Mbps Prepaid 6 Months",price:1838.85,duration:"7 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid Daily",price:23,duration:"1 day",data:"Unlimited",socialData:null,minutes:"50",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid Weekly",price:28.75,duration:"7 days",data:2,socialData:"2 GB",minutes:"100",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid Weekly Plus",price:57.5,duration:"7 days",data:5,socialData:"5 GB",minutes:"500",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 30",price:34.5,duration:"4 weeks",data:1,socialData:"1 GB",minutes:"100",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 75",price:86.25,duration:"4 weeks",data:"10+10 GB",socialData:"10+15 GB",minutes:"500",paymentType:"Prepaid",benefits:"Special offer"},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 110",price:126.5,duration:"4 weeks",data:"25+15 GB",socialData:"30+25 GB",minutes:"1500",paymentType:"Prepaid",benefits:"Special offer"},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 150",price:172.5,duration:"4 weeks",data:55,socialData:"Unlimited",minutes:"3000",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid Bundle 150 Data Booster",price:172.5,duration:"4 weeks",data:70,socialData:"Unlimited",minutes:"1000",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 180",price:207,duration:"4 weeks",data:80,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid Bundle 180 Data Booster",price:207,duration:"4 weeks",data:90,socialData:"Unlimited",minutes:"1000",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 220",price:253,duration:"4 weeks",data:100,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid Bundle 220 Data Booster",price:253,duration:"4 weeks",data:114,socialData:"Unlimited",minutes:"1000",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 360",price:395,duration:"4 weeks",data:"Unlimited",socialData:"Unlimited",minutes:"Unlimited",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Flex Plus 20",price:23,duration:"7 days",data:3,socialData:null,minutes:"60 (flex)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Flex Plus 30",price:34.5,duration:"4 weeks",data:1,socialData:"1 GB",minutes:"100 (flex)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Flex Plus 65",price:74.75,duration:"4 weeks",data:9,socialData:"9 GB",minutes:"300 (flex)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Flex Plus 100",price:115,duration:"4 weeks",data:35,socialData:"35 GB",minutes:"1000 (flex)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Flex Plus 150",price:172.5,duration:"4 weeks",data:60,socialData:"60 GB",minutes:"1500 (flex)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Flex Plus 240",price:276,duration:"4 weeks",data:115,socialData:"Unlimited",minutes:"2000 (flex)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Flex Plus 320",price:368,duration:"90 days",data:100,socialData:"Unlimited",minutes:"1200 (flex)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid 65",price:74.75,duration:"Monthly",data:8,socialData:"8 GB",minutes:"400",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid 100",price:115,duration:"Monthly",data:30,socialData:"30 GB",minutes:"1500",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid 150",price:172.5,duration:"Monthly",data:56,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid 200",price:230,duration:"Monthly",data:97,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid 300",price:345,duration:"Monthly",data:150,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid 400",price:460,duration:"Monthly",data:"Unlimited",socialData:"Unlimited",minutes:"Unlimited",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid XStream",price:255,duration:"Monthly",data:90,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid XStream Plus",price:370,duration:"Monthly",data:140,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid XStream Max",price:570,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"Unlimited",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid eSIM50 (Shared)",price:57.5,duration:"Monthly",data:"Shared",socialData:null,minutes:"Shared",paymentType:"Postpaid",benefits:"Shared data & minutes (eSIM)"},
+{category:"Mobile",operator:"Mobily",name:"Prepaid 100GB",price:184,duration:"Monthly",data:100,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Mobily",name:"Prepaid Unlimited",price:378.75,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Home Internet",operator:"Mobily",name:"Mobily 5G Unlimited",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Mobily 5G 100Mps",price:230,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Mobily 5G 200Mps",price:240,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Mobily 5G 300Mb",price:322,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid 100GB",price:184,duration:"Monthly",data:100,socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Mobily",name:"Postpaid Unlimited",price:373.75,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"multi sims"},
+{category:"Mobile",operator:"Zain",name:"Shabab 79",price:79,duration:"4 weeks",data:15,socialData:"15 GB",minutes:"500",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Zain",name:"Shabab 119",price:119,duration:"4 weeks",data:30,socialData:"Unlimited",minutes:"1500",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Zain",name:"Shabab 169",price:169,duration:"4 weeks",data:55,socialData:"Unlimited",minutes:"Unlimited",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Zain",name:"Shabab 409",price:409,duration:"4 weeks",data:"Unlimited",socialData:"Unlimited",minutes:"Unlimited",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Zain",name:"Flex 329",price:378.35,duration:"3 months",data:135,socialData:"Unlimited",minutes:"1000 (flex)",paymentType:"Prepaid",benefits:"2000 flex min on-time renewal. Unlimited Flex Group Calls"},
+{category:"Mobile",operator:"Zain",name:"Flex 169",price:194.35,duration:"4 weeks",data:60,socialData:"Unlimited",minutes:"1250 (flex)",paymentType:"Prepaid",benefits:"2500 flex min on-time renewal. Unlimited Flex Group Calls"},
+{category:"Mobile",operator:"Zain",name:"Flex 139",price:159.85,duration:"4 weeks",data:50,socialData:"Unlimited",minutes:"1000 (flex)",paymentType:"Prepaid",benefits:"2000 flex min on-time renewal. Unlimited Flex Group Calls"},
+{category:"Mobile",operator:"Zain",name:"Flex 109",price:125.35,duration:"4 weeks",data:35,socialData:"Unlimited",minutes:"800 (flex)",paymentType:"Prepaid",benefits:"1600 flex min on-time renewal"},
+{category:"Mobile",operator:"Zain",name:"Flex 109 Sudan",price:125.35,duration:"4 weeks",data:25,socialData:"Unlimited",minutes:"2000 (flex)",paymentType:"Prepaid",benefits:"Limited-time offer (Sudan)"},
+{category:"Mobile",operator:"Zain",name:"Flex 69",price:79.35,duration:"4 weeks",data:10,socialData:"15 GB",minutes:"300 (flex)",paymentType:"Prepaid",benefits:"600 flex min on-time renewal"},
+{category:"Mobile",operator:"Zain",name:"50 GB Internet",price:115,duration:"Monthly",data:50,socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Up to 655 SAR device discount"},
+{category:"Mobile",operator:"Zain",name:"50 GB Internet + 50 GB Social",price:149,duration:"Monthly",data:50,socialData:"50 GB (Facebook, Snapchat, YouTube)",minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Zain",name:"100 GB Internet",price:179,duration:"Monthly",data:100,socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Zain",name:"Unlimited Data",price:373.75,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Zain",name:"Postpaid 75",price:75,duration:"Monthly",data:10,socialData:null,minutes:"400",paymentType:"Postpaid",benefits:"Multi-SIM: 1 paid data SIM (35 SAR/mo). Device installment up to 1,800 SAR"},
+{category:"Mobile",operator:"Zain",name:"Postpaid 120",price:120,duration:"Monthly",data:30,socialData:"15 GB",minutes:"1000",paymentType:"Postpaid",benefits:"Multi-SIM: 1 paid data SIM (35 SAR/mo). Device installment up to 2,880 SAR"},
+{category:"Mobile",operator:"Zain",name:"Postpaid 180",price:180,duration:"Monthly",data:50,socialData:"Unlimited",minutes:"1300",paymentType:"Postpaid",benefits:"Multi-SIM: 1 paid data SIM (35 SAR/mo). Device installment up to 4,320 SAR"},
+{category:"Mobile",operator:"Zain",name:"Postpaid 250",price:250,duration:"Monthly",data:110,socialData:"Unlimited",minutes:"1500",paymentType:"Postpaid",benefits:"2 GB GCC roaming. Multi-SIM: 2 paid data SIMs (35 SAR each/mo). Device installment up to 6,000 SAR. Bronze vanity number"},
+{category:"Mobile",operator:"Zain",name:"Postpaid 420",price:420,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"Unlimited",paymentType:"Postpaid",benefits:"8 GB roaming data + 100 roaming min. Multi-SIM: 2 paid data SIMs (35 SAR each/mo). Device installment up to 6,900 SAR. Silver vanity number"},
+{category:"Mobile",operator:"Zain",name:"Postpaid 650",price:650,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"Unlimited",paymentType:"Postpaid",benefits:"130 intl min. Unlimited worldwide roaming data + 150 roaming min. Multi-SIM: 3 paid + 1 free data SIM. Device subsidy up to 4,600 SAR. Gold vanity number"},
+{category:"Mobile",operator:"Zain",name:"Black",price:1000,duration:"Monthly",data:"Unlimited",socialData:null,minutes:"Unlimited",paymentType:"Postpaid",benefits:"200 intl min. Unlimited worldwide roaming data + unlimited incoming + 200 outgoing roaming min. Multi-SIM: 2 paid + 2 free data SIMs. Device subsidy up to 6,325 SAR. Platinum vanity number"},
+{category:"Mobile",operator:"Zain",name:"50 GB Internet",price:115,duration:"Monthly",data:50,socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Data-only + up to 655 SAR discount on devices"},
+{category:"Mobile",operator:"Zain",name:"50 GB Internet + 50GB Social",price:149,duration:"Monthly",data:50,socialData:50,minutes:null,paymentType:"Postpaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"100 GB Internet",price:179,duration:"Monthly",data:100,socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Unlimited Data",price:373.75,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Data 30GB + 50GB Social",price:113.85,duration:"30 days",data:30,socialData:"50 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Data 75GB + 75GB Social",price:228.85,duration:"60 days",data:75,socialData:"75 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Data 30GB + 30GB Social",price:201.25,duration:"60 days",data:30,socialData:"30 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Data 125GB + 100GB Social",price:343.85,duration:"90 days",data:125,socialData:"100 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Data 150GB + 150GB Social",price:458.85,duration:"90 days",data:150,socialData:"150 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Unlimited 5G Internet",price:373.75,duration:"30 days",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Unlimited 5G Internet",price:2298.85,duration:"180 days",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Unlimited 5G Internet",price:1148.85,duration:"90 days",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"105 GB Internet",price:184,duration:"30 days",data:105,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"300 GB Internet",price:517.5,duration:"90 days",data:300,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Zain",name:"Shabab 229",price:229,duration:"4 weeks",data:103,socialData:"Unlimited",minutes:"1150 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"MiniX",price:67,duration:"4 weeks",data:7,socialData:"7 GB on limited apps",minutes:"400",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"1x",price:90,duration:"4 weeks",data:30,socialData:"7 apps unlimited",minutes:"300 (+ SMS)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"2x",price:125,duration:"4 weeks",data:50,socialData:"7 apps unlimited",minutes:"500 (+ SMS)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"3x",price:175,duration:"4 weeks",data:75,socialData:"7 apps unlimited",minutes:"750 (+ SMS)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"4x",price:220.57,duration:"4 weeks",data:100,socialData:"7 apps unlimited",minutes:"1000 (+ SMS)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"5x",price:385,duration:"4 weeks",data:"Unlimited",socialData:null,minutes:"Unlimited (+ SMS)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"FLEXii 1",price:85,duration:"4 weeks",data:15,socialData:"15 GB on 7 apps (limited)",minutes:"750 (local + intl)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"FLEXii 2",price:115,duration:"4 weeks",data:30,socialData:"30 GB on 7 apps (limited)",minutes:"1300 (local + intl)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Yaqoot",name:"NETii SOCIAL",price:83,duration:"4 weeks",data:20,socialData:"+40 GB on 7 apps (limited)",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Yaqoot",name:"NETii 1",price:75,duration:"4 weeks",data:30,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Yaqoot",name:"NETii 2",price:90,duration:"4 weeks",data:50,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Yaqoot",name:"NETii 3",price:130,duration:"4 weeks",data:75,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Yaqoot",name:"NETii 4",price:175,duration:"4 weeks",data:100,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Yaqoot",name:"NETii ∞",price:350,duration:"4 weeks",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Solo 74",price:85.68,duration:"Monthly",data:20,socialData:"20 GB",minutes:"450 local",paymentType:"Prepaid / Postpaid",benefits:"450 local SMS; rollover up to 20 GB"},
+{category:"Mobile",operator:"Salam",name:"Solo 99",price:113.85,duration:"Monthly",data:35,socialData:"Unlimited",minutes:"1000 local",paymentType:"Prepaid / Postpaid",benefits:"450 local SMS; rollover 20 GB"},
+{category:"Mobile",operator:"Salam",name:"Solo 149",price:171.35,duration:"Monthly",data:59,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid / Postpaid",benefits:"Unlimited local SMS; rollover up to 25 GB"},
+{category:"Mobile",operator:"Salam",name:"Solo 179",price:206.43,duration:"Monthly",data:79,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid / Postpaid",benefits:"Unlimited local SMS; rollover up to 40 GB"},
+{category:"Mobile",operator:"Salam",name:"Solo 199",price:228.85,duration:"Monthly",data:80,socialData:"Unlimited",minutes:"1800 local + 100 intl",paymentType:"Prepaid / Postpaid",benefits:"2,000 local SMS; rollover up to 40 GB; international calling"},
+{category:"Mobile",operator:"Salam",name:"Solo Unlimited",price:412.85,duration:"Monthly",data:"Unlimited",socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid / Postpaid",benefits:"Unlimited local SMS; free additional data SIM"},
+{category:"Mobile",operator:"Salam",name:"SIMPAL Flex 34",price:39.1,duration:"28 days",data:1,socialData:"2 GB",minutes:"50 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Salam",name:"SIMPAL 34",price:39.1,duration:"28 days",data:1,socialData:"2 GB",minutes:"200 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Salam",name:"Super Flex 85",price:97.75,duration:"28 days",data:15,socialData:"15 GB",minutes:"750 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Salam",name:"Super Flex 110",price:126.5,duration:"28 days",data:30,socialData:"Unlimited",minutes:"1200 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Salam",name:"Super Flex 200",price:230,duration:"60 days",data:75,socialData:"Unlimited",minutes:"1300 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Salam",name:"Super Flex 300",price:345,duration:"90 days",data:110,socialData:"Unlimited",minutes:"1600 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Salam",name:"Solo 160",price:184,duration:"60 days",data:50,socialData:"Unlimited",minutes:"1000 local",paymentType:"Prepaid",benefits:"450 local SMS; extended validity"},
+{category:"Mobile",operator:"Salam",name:"Solo 240",price:276,duration:"90 days",data:90,socialData:"Unlimited",minutes:"1000 local",paymentType:"Prepaid",benefits:"450 local SMS; extended validity"},
+{category:"Mobile",operator:"Salam",name:"Solo 340",price:391,duration:"120 days",data:135,socialData:"Unlimited",minutes:"1500 local",paymentType:"Prepaid",benefits:"450 local SMS; extended validity"},
+{category:"Mobile",operator:"Salam",name:"Solo 1200",price:1380,duration:"180 days",data:500,socialData:"Unlimited",minutes:"3000 local",paymentType:"Prepaid",benefits:"1,000 local SMS; extended validity"},
+{category:"Mobile",operator:"Salam",name:"Solo 2000",price:2300,duration:"365 days",data:1000,socialData:"Unlimited",minutes:"6000 local",paymentType:"Prepaid",benefits:"2,000 local SMS; extended validity"},
+{category:"Mobile",operator:"Salam",name:"Data 35GB + 40GB Social",price:109.25,duration:"30 days",data:35,socialData:"40 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 30GB + 50GB Social",price:115,duration:"30 days",data:30,socialData:"50 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 50GB + 50GB Social",price:149,duration:"30 days",data:50,socialData:"50 GB",minutes:null,paymentType:"Postpaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 100GB (Prepaid)",price:172.5,duration:"30 days",data:100,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 100GB (Postpaid)",price:173,duration:"30 days",data:100,socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 10GB – 90 Days",price:149.5,duration:"90 days",data:10,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 45GB – 90 Days",price:195.5,duration:"90 days",data:45,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 135GB – 90 Days",price:253,duration:"90 days",data:135,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 500GB – 1 Year",price:920,duration:"12 months",data:500,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Salam",name:"Data 1TB – 1 Year",price:1725,duration:"12 months",data:1000,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Hilali 70",price:80.5,duration:"4 weeks",data:15,socialData:"30 GB",minutes:"400 local",paymentType:"Prepaid",benefits:"400 local SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Hilali 95",price:109.25,duration:"4 weeks",data:35,socialData:"Unlimited",minutes:"850 local",paymentType:"Prepaid",benefits:"850 local SMS; 2 GB + 10 min roaming"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Hilali 160",price:184,duration:"30 days",data:65,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid",benefits:"Unlimited local SMS; 5 GB + 15 min roaming; 1 extra data SIM"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Hilali 300",price:345,duration:"30 days",data:160,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid",benefits:"Unlimited local SMS; 15 GB + unlimited GCC roaming; 2 extra SIMs"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji 60",price:69,duration:"30 days",data:6,socialData:"6 GB",minutes:"400 local",paymentType:"Prepaid",benefits:"400 local SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji 80",price:92,duration:"30 days",data:25,socialData:"35 GB",minutes:"500 local",paymentType:"Prepaid",benefits:"500 local SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji 95",price:109.25,duration:"30 days",data:35,socialData:"Unlimited",minutes:"800 local",paymentType:"Prepaid",benefits:"800 local SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji Max",price:119.95,duration:"30 days",data:40,socialData:"Unlimited",minutes:"950 local",paymentType:"Prepaid",benefits:"950 local SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji 120",price:138,duration:"30 days",data:50,socialData:"Unlimited",minutes:"1050 local",paymentType:"Prepaid",benefits:"Unlimited local SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji 130",price:149.5,duration:"30 days",data:55,socialData:"Unlimited",minutes:"1200 local",paymentType:"Prepaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji 160+",price:184,duration:"30 days",data:66,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji 360+",price:414,duration:"30 days",data:"Unlimited",socialData:null,minutes:"Unlimited local",paymentType:"Prepaid",benefits:"Unlimited local SMS; 30 GB GCC roaming"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Guest 20",price:23,duration:"7 days",data:6,socialData:null,minutes:"60 local + intl",paymentType:"Prepaid",benefits:"10 local + intl SMS; visitor SIM"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Guest 60",price:69,duration:"14 days",data:30,socialData:null,minutes:"180 local + intl",paymentType:"Prepaid",benefits:"30 local + intl SMS; visitor SIM"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Guest 90",price:103.5,duration:"28 days",data:50,socialData:null,minutes:"300 local + intl",paymentType:"Prepaid",benefits:"45 local + intl SMS; visitor SIM"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Guest 150",price:172.5,duration:"45 days",data:70,socialData:null,minutes:"420 local + intl",paymentType:"Prepaid",benefits:"75 local + intl SMS; visitor SIM"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji Flex 100",price:115,duration:"30 days",data:25,socialData:"30 GB",minutes:"900 flex (local/intl)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji Flex 200",price:230,duration:"60 days",data:89,socialData:"Unlimited",minutes:"600 flex (local/intl)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji Flex 300",price:345,duration:"90 days",data:100,socialData:"Unlimited",minutes:"1300 flex (local/intl)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Mazaji Flex 350",price:402.5,duration:"120 days",data:140,socialData:"Unlimited",minutes:"1450 flex (local/intl)",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Full 80",price:92,duration:"30 days",data:25,socialData:"25 GB",minutes:"500 local",paymentType:"Postpaid",benefits:"500 local SMS"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Full 120",price:138,duration:"30 days",data:40,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited local SMS; free bronze number; 1 extra data SIM"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Full 160",price:184,duration:"30 days",data:65,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited local SMS; free bronze number; 2 extra data SIMs"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Full 260",price:299,duration:"30 days",data:130,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited local SMS; 2 GB roaming (limited countries); free silver number; 2 extra data SIMs"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Full 400+",price:460,duration:"30 days",data:"Unlimited",socialData:null,minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited local SMS; unlimited data roaming (2 GB/day); 100 roaming min; 50 intl min; 50 GB GCC; free gold number; 3 extra data SIMs"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Hilali 160",price:184,duration:"30 days",data:65,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited local SMS; 5 GB + 15 min roaming; 2 extra data SIMs; free silver number"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Hilali 300",price:345,duration:"30 days",data:160,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited local SMS; 15 GB + unlimited GCC + 50 min roaming; 2 extra data SIMs + 1 junior SIM; free gold number"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"8 GB",price:69,duration:"30 days",data:8,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"12 GB + 12 GB social",price:74.75,duration:"30 days",data:12,socialData:"12 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"20 GB",price:103.5,duration:"30 days",data:20,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"30 GB + 30 GB social",price:97.75,duration:"30 days",data:30,socialData:"30 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"25 GB + Unlimited Social",price:149.5,duration:"60 days",data:25,socialData:"Unlimited",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"50 GB + 50 GB social",price:149.5,duration:"30 days",data:50,socialData:"50 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"80 GB + 80 GB social",price:241.5,duration:"60 days",data:80,socialData:"80 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"100 GB + 50 GB social",price:276,duration:"90 days",data:100,socialData:"50 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"130 GB + 100 GB social",price:339.25,duration:"90 days",data:130,socialData:"100 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"200 GB",price:345,duration:"90 days",data:200,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Unlimited Data",price:373.75,duration:"30 days",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"300 GB",price:517.5,duration:"120 days",data:300,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"350 GB Bundle",price:552,duration:"90 days",data:250,socialData:"100 GB",minutes:null,paymentType:"Prepaid",benefits:"Data-only; '350 GB' = 250 GB internet + 100 GB social"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"300 GB + Unlimited Social",price:632.5,duration:"90 days",data:300,socialData:"Unlimited",minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"Red Bull Mobile",name:"Unlimited Data 90 Days*",price:1121.25,duration:"90 days",data:400,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only; marketed 'Unlimited' but card states a 400 GB cap"},
+{category:"Mobile",operator:"Jawwy",name:"Jawwy 45 eSIM",price:51.75,duration:"Monthly",data:3,socialData:"1 GB",minutes:"250",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Jawwy",name:"Jawwy 70 eSIM",price:80.5,duration:"Monthly",data:20,socialData:"20 GB",minutes:"350",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Jawwy",name:"Jawwy 90 eSIM",price:103.5,duration:"Monthly",data:30,socialData:"Unlimited",minutes:"500",paymentType:"Prepaid",benefits:"Trend"},
+{category:"Mobile",operator:"Jawwy",name:"Jawwy 150 eSIM",price:172.5,duration:"Monthly",data:70,socialData:"Unlimited",minutes:"1000",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Jawwy",name:"Jawwy 200 eSIM",price:230,duration:"Monthly",data:100,socialData:"Unlimited",minutes:"1300",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Jawwy",name:"Flex 75",price:86.25,duration:"Monthly",data:11,socialData:"13 GB",minutes:"400",paymentType:"Prepaid",benefits:"Physical SIM & eSIM (same price)"},
+{category:"Mobile",operator:"Jawwy",name:"Flex 105",price:120.75,duration:"Monthly",data:35,socialData:"45 GB",minutes:"1000",paymentType:"Prepaid",benefits:"Physical SIM & eSIM (same price)"},
+{category:"Mobile",operator:"Jawwy",name:"Flex 125",price:143.75,duration:"Monthly",data:45,socialData:"Unlimited",minutes:"1100",paymentType:"Prepaid",benefits:"Physical SIM & eSIM (same price)"},
+{category:"Mobile",operator:"Jawwy",name:"Flex 155",price:178.25,duration:"Monthly",data:60,socialData:"Unlimited",minutes:"1500",paymentType:"Prepaid",benefits:"Physical SIM & eSIM (same price)"},
+{category:"Mobile",operator:"Jawwy",name:"SIM 30",price:34.5,duration:"30 days",data:1,socialData:null,minutes:"100 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Jawwy",name:"Jawwy 110",price:126.5,duration:"30 days",data:45,socialData:"Unlimited",minutes:"750 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 45",price:51.75,duration:"4 weeks",data:3,socialData:"1 GB",minutes:"250 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 70",price:80.5,duration:"4 weeks",data:20,socialData:"20 GB",minutes:"350 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 90",price:103.5,duration:"4 weeks",data:30,socialData:"Unlimited",minutes:"450 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 100",price:115,duration:"4 weeks",data:40,socialData:"Unlimited",minutes:"750 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 110",price:126.5,duration:"4 weeks",data:45,socialData:"Unlimited",minutes:"745 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 150",price:172.5,duration:"4 weeks",data:55,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 185",price:212.75,duration:"4 weeks",data:80,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah 365",price:419.75,duration:"4 weeks",data:"Unlimited",socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah Flex 60",price:69,duration:"4 weeks",data:6,socialData:"6 GB",minutes:"300 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah Flex 100",price:115,duration:"4 weeks",data:35,socialData:"35 GB",minutes:"1000 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Baqah Flex 300",price:345,duration:"12 weeks",data:100,socialData:"Unlimited",minutes:"1500 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Virgin Mobile",name:"Switch Postpaid 120",price:138,duration:"Monthly",data:35,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Virgin Mobile",name:"Switch Postpaid 150",price:172.5,duration:"Monthly",data:55,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Virgin Mobile",name:"Switch Postpaid 180",price:207,duration:"Monthly",data:75,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Virgin Mobile",name:"Switch Postpaid 200",price:230,duration:"Monthly",data:90,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Virgin Mobile",name:"Switch Postpaid 250",price:287.5,duration:"Monthly",data:120,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Virgin Mobile",name:"Switch Postpaid 300",price:345,duration:"Monthly",data:155,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Virgin Mobile",name:"Switch Postpaid 365",price:419.75,duration:"Monthly",data:"Unlimited",socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"Unlimited SMS"},
+{category:"Mobile",operator:"Virgin Mobile",name:"MBB 50GB – 1 Month",price:97.75,duration:"30 days",data:50,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only; 5G"},
+{category:"Mobile",operator:"Virgin Mobile",name:"MBB 100GB – 3 Months",price:253,duration:"90 days",data:100,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only; 5G"},
+{category:"Mobile",operator:"Virgin Mobile",name:"MBB 500GB – 1 Year",price:920,duration:"12 months",data:500,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only; 5G"},
+{category:"Mobile",operator:"Lebara",name:"Yalla 70",price:80.5,duration:"30 days",data:15,socialData:"20 GB",minutes:"350 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Yalla 90",price:103.5,duration:"30 days",data:35,socialData:"55 GB",minutes:"600 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Yalla 110",price:126.5,duration:"30 days",data:40,socialData:"Unlimited",minutes:"1100 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Yalla Stream - 5 weeks",price:143.75,duration:"35 days",data:50,socialData:"Unlimited (stream + social)",minutes:"1000 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Yalla 130",price:149.5,duration:"30 days",data:55,socialData:"Unlimited",minutes:"1000 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Yalla 150",price:172.5,duration:"30 days",data:70,socialData:"Unlimited",minutes:"1000 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Yalla 180",price:207,duration:"30 days",data:95,socialData:"Unlimited",minutes:"600 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Yalla 220",price:253,duration:"30 days",data:120,socialData:"Unlimited",minutes:"700 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"Flex 100",price:100,duration:"28 days",data:35,socialData:"35 GB",minutes:"900 intl flex",paymentType:"Prepaid",benefits:"Intl flex calling: Yemen, Sudan, Egypt, India, Bangladesh, Pakistan, Philippines, Indonesia, USA, Canada"},
+{category:"Mobile",operator:"Lebara",name:"eze flex 150",price:172.5,duration:"Monthly",data:60,socialData:"Unlimited",minutes:"1000 flex",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"eze 60",price:60,duration:"Monthly",data:6,socialData:"6 GB",minutes:"400 local",paymentType:"Postpaid",benefits:"No contract; 5G"},
+{category:"Mobile",operator:"Lebara",name:"eze 80",price:80,duration:"Monthly",data:25,socialData:"25 GB",minutes:"500 local",paymentType:"Postpaid",benefits:"No contract; 5G"},
+{category:"Mobile",operator:"Lebara",name:"eze 100",price:115,duration:"Monthly",data:35,socialData:"Unlimited",minutes:"1000 local",paymentType:"Postpaid",benefits:null},
+{category:"Mobile",operator:"Lebara",name:"eze 130",price:149.5,duration:"Monthly",data:55,socialData:"Unlimited",minutes:"1000 local",paymentType:"Postpaid",benefits:"No contract; 5G"},
+{category:"Mobile",operator:"Lebara",name:"eze 200",price:230,duration:"Monthly",data:93,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"No contract; 5G"},
+{category:"Mobile",operator:"Lebara",name:"eze 290",price:333.5,duration:"Monthly",data:150,socialData:"Unlimited",minutes:"Unlimited local",paymentType:"Postpaid",benefits:"No contract; 5G"},
+{category:"Mobile",operator:"FRiENDi",name:"Combo 19.55",price:19.55,duration:"14 days",data:1,socialData:null,minutes:"120 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Combo 50",price:50,duration:"21 days",data:5,socialData:"3 GB",minutes:"200 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Combo 63.25",price:63.25,duration:"28 days",data:5,socialData:"5 GB",minutes:"250 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Combo 86.25",price:86.25,duration:"30 days",data:1,socialData:null,minutes:"10 capped",paymentType:"Prepaid",benefits:"Voice & data hard-capped"},
+{category:"Mobile",operator:"FRiENDi",name:"Combo 103.50",price:103.5,duration:"30 days",data:20,socialData:null,minutes:"100 local + 100 intl",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Combo 171.35",price:171.35,duration:"30 days",data:55,socialData:"Unlimited",minutes:"1500 local",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Flexi 23",price:23,duration:"7 days",data:3,socialData:"3 GB",minutes:"120 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Flexi 48",price:48,duration:"28 days",data:2,socialData:"2 GB",minutes:"150 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Flexi 69",price:69,duration:"28 days",data:6,socialData:"6 GB",minutes:"300 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Flexi 115",price:115,duration:"28 days",data:35,socialData:"35 GB",minutes:"1000 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Flexi 126.50",price:126.5,duration:"28 days",data:40,socialData:"Unlimited",minutes:"1200 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Flexi 345",price:345,duration:"90 days",data:100,socialData:"Unlimited",minutes:"1500 flex",paymentType:"Prepaid",benefits:null},
+{category:"Mobile",operator:"FRiENDi",name:"Data 9.77",price:9.77,duration:"7 days",data:0.5,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Data 19.55",price:19.55,duration:"21 days",data:1.2,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Data 63.25",price:63.25,duration:"30 days",data:13,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Data 97.75",price:97.75,duration:"30 days",data:40,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Data 113.85",price:113.85,duration:"30 days",data:20,socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Data 373.75",price:373.75,duration:"30 days",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Data-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Local 1.72",price:1.72,duration:"1 day",data:null,socialData:null,minutes:"Unlimited local",paymentType:"Prepaid",benefits:"Voice-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Local 3.45",price:3.45,duration:"1 day",data:null,socialData:null,minutes:"25 local",paymentType:"Prepaid",benefits:"Voice-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Local 8.05",price:8.05,duration:"7 days",data:null,socialData:null,minutes:"Unlimited local",paymentType:"Prepaid",benefits:"Voice-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Local 17.25",price:17.25,duration:"7 days",data:null,socialData:null,minutes:"150 local",paymentType:"Prepaid",benefits:"Voice-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Local 28.75 (a)",price:28.75,duration:"30 days",data:null,socialData:null,minutes:"Unlimited local",paymentType:"Prepaid",benefits:"Voice-only"},
+{category:"Mobile",operator:"FRiENDi",name:"Local 28.75 (b)",price:28.75,duration:"30 days",data:null,socialData:null,minutes:"250 local",paymentType:"Prepaid",benefits:"Voice-only"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Entertainment",price:368,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:"stc tv + 2 streaming subscriptions (Netflix / Disney+ / Thmanyah / Shahid). Intro price (3 mo); standard 460 SR"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Stream",price:322,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:"stc tv + 1 streaming subscription (Netflix / Disney+ / Thmanyah / Shahid) + free modem & installation. Intro price (3 mo); standard 402.5 SR"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Basic",price:230,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:"Free stc tv + free modem & installation. Intro price (3 mo); standard 287.5 SR"},
+{category:"Home Internet",operator:"STC",name:"Baity Stream Lite",price:276,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:"Free stc tv + free modem & installation. Intro price (3 mo); standard 345 SR"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Entertainment Pro",price:690,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:"Free device (up to 5,520 SR) + stc tv + 2 streaming subscriptions (Netflix / Disney+ / Thmanyah / Shahid)"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Stream Pro",price:575,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:"Free device (up to 5,520 SR) + stc tv + 1 streaming subscription (Netflix / Disney+ / Thmanyah / Shahid)"},
+{category:"Home Internet",operator:"STC",name:"Baity Fiber Max",price:739,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:null,benefits:"Free device (up to 6,900 SR) + stc tv + 4 streaming subscriptions (Netflix / Disney+ / Thmanyah / Shahid). Intro price (3 mo); standard 920 SR"},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Postpaid 200",price:230,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Postpaid 300",price:287.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Postpaid 400",price:345,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Postpaid 500",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Gamers",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"GAME MODE included"},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Postpaid 1GB",price:920,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Home FTTR 400",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Fiber to the Room (FTTR)"},
+{category:"Home Internet",operator:"Mobily",name:"Home FTTR 500",price:460,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Fiber to the Room (FTTR)"},
+{category:"Home Internet",operator:"Mobily",name:"Home FTTR 1 Gbps",price:920,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Fiber to the Room (FTTR)"},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Prepaid 1GB",price:920,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Price cut off in screenshot — inferred from postpaid tier"},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Prepaid 500",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Price cut off in screenshot — inferred from postpaid tier"},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Prepaid 400",price:345,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Home Fiber Prepaid 300",price:287.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:null},
+{category:"Home Internet",operator:"Mobily",name:"Home 5G Unlimited",price:402.5,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"5G fixed wireless, uncapped speed. Commitment: 18 bill cycles"},
+{category:"Home Internet",operator:"Mobily",name:"Home 5G 100Mps",price:230,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"5G fixed wireless. Commitment: 18 bill cycles"},
+{category:"Home Internet",operator:"Mobily",name:"Home 5G 200Mps",price:240,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"5G fixed wireless. Special offer. Commitment: 18 bill cycles"},
+{category:"Home Internet",operator:"Mobily",name:"Home 5G 300Mps",price:322,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"5G fixed wireless. Commitment: 24 bill cycles"},
+{category:"Home Internet",operator:"Zain",name:"5G Home Basic",price:239,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Free 5G router"},
+{category:"Home Internet",operator:"Zain",name:"5G Home",price:299,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Free 5G router + Wi-Fi extender + 1 free subscription"},
+{category:"Home Internet",operator:"Zain",name:"5G Home Gaming",price:299,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Exclusive online price. Gaming router + Wi-Fi extender + 1 free subscription + dedicated global IP + 50 SAR monthly voucher"},
+{category:"Home Internet",operator:"Zain",name:"5G Home Plus",price:299,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Free 5G router + 2 Wi-Fi extenders + 2 free subscriptions"},
+{category:"Home Internet",operator:"Zain",name:"5G Home Black",price:500,duration:"Monthly",data:"Unlimited",socialData:null,minutes:null,paymentType:"Postpaid",benefits:"Free Mobility (portable) 5G. Black Edition router + 2 Black Edition extenders + choose 3 OTTs + network priority + dedicated dynamic IP"},
+{category:"Home Internet",operator:"Zain",name:"Fiber Home Basic",price:2999,duration:"12 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"FTTH prepaid (annual). Free router & installation + 2 free subscriptions (MBC, OSN+). Checkout showed 2,607.83 SR"},
+{category:"Home Internet",operator:"Yaqoot",name:"NETii Home ∞ (6 months)",price:1915,duration:"6 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Free router; ~SAR 319/mo effective"},
+{category:"Home Internet",operator:"Yaqoot",name:"NETii Home ∞ (12 months)",price:2999,duration:"12 months",data:"Unlimited",socialData:null,minutes:null,paymentType:"Prepaid",benefits:"Free router; ~SAR 250/mo effective"},
+{category:"Home Phone",operator:"STC",name:"Home Phone Plus",price:113.85,duration:"Monthly",data:null,socialData:null,minutes:"Free on-net + local/domestic calls",paymentType:null,benefits:"100 free min to mobile (then 46 hal/min); off-net 11.5 hal/min; 60 min to preferred-country numbers"}
+];
+
+const OPERATOR_AR = {
+  'STC':'STC','Mobily':'موبايلي','Zain':'زين','Jawwy':'جوي',
+  'Salam':'سلام','Red Bull Mobile':'ريد بول موبايل','Lebara':'ليبارا',
+  'FRiENDi':'فريندي','Yaqoot':'ياقوت','Virgin Mobile':'فيرجن موبايل'
+};
+
+const TYPE_CFG = {
+  mobile:{label:'خط موبايل',icon:'📱',cat:'Mobile'},
+  fiber:{label:'فايبر',icon:'🌐',cat:'Home Internet'},
+  router:{label:'راوتر',icon:'📡',cat:'Home Internet'}
+};
+
+let userLines = [];
+let curLine = {};
+let userAns = {};
+let stepPlans = [];
+let resultsRevealed = false;
+
+// ─── MODAL ───
+function openModal(){ curLine={}; document.getElementById('modal').style.display='flex'; step1(); }
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+function overlayClick(e){ if(e.target.id==='modal') closeModal(); }
+
+function step1(){
+  setModal('وش تبي تضيف الحين؟',`
+    <div class="type-grid">
+      <button class="type-btn" onclick="pickType('mobile')"><span class="tb-icon">📱</span><span class="tb-label">خط موبايل</span></button>
+      <button class="type-btn" onclick="pickType('fiber')"><span class="tb-icon">🌐</span><span class="tb-label">فايبر</span></button>
+      <button class="type-btn" onclick="pickType('router')"><span class="tb-icon">📡</span><span class="tb-label">راوتر</span></button>
+    </div>
+    <button class="btn-back" onclick="closeModal()">إلغاء</button>
+  `);
+}
+
+function pickType(t){ curLine.type=t; curLine.cat=TYPE_CFG[t].cat; step2(); }
+
+function step2(){
+  const ops=[...new Set(PLANS.filter(p=>p.category===curLine.cat).map(p=>p.operator))];
+  setModal('مع أي مشغّل؟',`
+    <div class="op-grid">
+      ${ops.map(op=>`<button class="op-btn" onclick="pickOp('${op}')">${OPERATOR_AR[op]||op}</button>`).join('')}
+    </div>
+    <button class="btn-back" onclick="step1()">← رجوع</button>
+  `);
+}
+
+function pickOp(op){ curLine.op=op; step3(); }
+
+function step3(){
+  stepPlans = PLANS.filter(p=>p.category===curLine.cat && p.operator===curLine.op && !/visitor/i.test(p.name)).sort((a,b)=>a.price-b.price);
+  setModal('وش باقتك الحالية؟',`
+    <input type="text" class="form-input" id="planSearch" placeholder="ابحث عن باقتك..." oninput="filterPlans(this.value)" style="margin-bottom:12px;border-radius:999px;padding:10px 18px">
+    <div class="plan-list" id="planList">
+      ${renderPlanItems(stepPlans)}
+    </div>
+    <button class="btn-back" onclick="step2()">← رجوع</button>
+  `);
+}
+
+function renderPlanItems(plans){
+  return plans.map((p,i)=>`
+    <div class="plan-item" id="pi_${i}" onclick="pickPlan(${i})">
+      <div style="flex:1">
+        <div class="pi-name">${p.name}</div>
+        <div class="pi-details">
+          ${p.data?(p.data==='Unlimited'?'داتا ∞':p.data+' GB'):''}
+          ${p.minutes?' • '+p.minutes:''}
+        </div>
+      </div>
+      <div class="pi-price">${p.price} ريال</div>
+    </div>
+  `).join('');
+}
+
+function filterPlans(q){
+  const lower = q.toLowerCase();
+  const filtered = stepPlans.map((p,i)=>({...p,_i:i}))
+    .filter(p=>!q || p.name.toLowerCase().includes(lower) || String(p.price).includes(q));
+  document.getElementById('planList').innerHTML = filtered.map(p=>`
+    <div class="plan-item" id="pi_${p._i}" onclick="pickPlan(${p._i})">
+      <div style="flex:1">
+        <div class="pi-name">${p.name}</div>
+        <div class="pi-details">
+          ${p.data?(p.data==='Unlimited'?'داتا ∞':p.data+' GB'):''}
+          ${p.minutes?' • '+p.minutes:''}
+        </div>
+      </div>
+      <div class="pi-price">${p.price} ريال</div>
+    </div>
+  `).join('');
+}
+
+function pickPlan(i){
+  document.querySelectorAll('.plan-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('pi_'+i).classList.add('active');
+  curLine.plan=stepPlans[i];
+  step4();
+}
+
+function step4(){
+  const p=curLine.plan;
+  const isHome=curLine.cat==='Home Internet';
+  const curSpd=p.downloadSpeed||'غير محدد';
+
+  const extraField=isHome?`
+    <div class="form-group">
+      <label class="form-label">كم تحتاج سرعة الإنترنت كحد أدنى؟</label>
+      <div style="background:var(--paper);border:var(--border);padding:12px 14px;margin-bottom:10px;font-size:13px;color:#555;border-radius:12px">
+        📶 سرعة باقتك الحالية: <strong>${curSpd}</strong>
+      </div>
+      <select class="form-input" id="spdInp">
+        <option value="">اختار الحد الأدنى اللي تقبله</option>
+        <option value="100">100 Mbps — كافي للبراوزينج والسوشيال</option>
+        <option value="300">300 Mbps — ستريمينج ومكالمات فيديو</option>
+        <option value="500">500 Mbps — أكثر من شخص في نفس الوقت</option>
+        <option value="1000">1 Gbps+ — ألعاب أو تحميل ملفات ضخمة</option>
+      </select>
+      <div class="form-hint">صوب ما راح يوصيك بأي باقة أقل من هذي السرعة</div>
+    </div>
+  `:`
+  `;
+
+  setModal('آخر خطوة 👌',`
+    <div class="selected-plan-preview">
+      <div class="sp-op">${OPERATOR_AR[curLine.op]||curLine.op} • ${TYPE_CFG[curLine.type].label}</div>
+      <div class="sp-name">${p.name}</div>
+      <div class="sp-price">${p.price} <span style="font-size:15px;font-weight:400">ريال/شهر</span></div>
+    </div>
+    ${extraField}
+    <button class="btn-confirm" onclick="addLine()">ضيف الخط ✓</button>
+    <button class="btn-back" onclick="step3()">← رجوع</button>
+  `);
+}
+
+function addLine(){
+  const isHome=curLine.cat==='Home Internet';
+  const spdEl=document.getElementById('spdInp');
+  userLines.push({
+    id:Date.now(),
+    type:curLine.type,
+    cat:curLine.cat,
+    op:curLine.op,
+    plan:curLine.plan,
+    usage:null,
+    dataLeft:null,
+    minsLeft:null,
+    socialDataLeft:null,
+    activationDate:null,
+    _consumedData:null,
+    _consumedMins:null,
+    _consumedSocial:null,
+    minSpeedMbps:(isHome && spdEl && spdEl.value)?parseInt(spdEl.value):null
+  });
+  resultsRevealed = false;
+  closeModal();
+  renderLines();
+  runAnalysis();
+}
+
+function setModal(title,html){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalContent').innerHTML=html;
+}
+
+// ─── LINES ───
+function renderLines(){
+  const grid=document.getElementById('linesGrid');
+  const empty=document.getElementById('emptyState');
+  if(!userLines.length){ empty.style.display='block'; grid.innerHTML=''; return; }
+  empty.style.display='none';
+  grid.innerHTML=userLines.map(l=>`
+    <div class="line-card">
+      <div class="lc-head">
+        <div class="lc-icon">${TYPE_CFG[l.type].icon}</div>
+        <div class="lc-type">${TYPE_CFG[l.type].label}</div>
+      </div>
+      <div class="lc-op">${OPERATOR_AR[l.op]||l.op}</div>
+      <div class="lc-name">${l.plan.name}</div>
+      <div class="lc-badges">
+        ${l.plan.data?`<span class="badge">${l.plan.data==='Unlimited'?'داتا ∞':l.plan.data+' GB'}</span>`:''}
+        ${l.usage!==null?`<span class="badge green">استخدام: ${l.usage} GB</span>`:''}
+        ${l.dataLeft!==null?`<span class="badge green">فاضي: ${l.dataLeft} GB</span>`:''}
+        ${l.minsLeft!==null?`<span class="badge green">دقايق فاضية: ${l.minsLeft}</span>`:''}
+      </div>
+      <div class="lc-price">${l.plan.price} <small>ريال/شهر</small></div>
+      <div class="lc-actions">
+        <button class="btn-sm btn-del" onclick="removeLine(${l.id})">🗑 شيله</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function removeLine(id){
+  userLines=userLines.filter(l=>l.id!==id);
+  renderLines();
+  runAnalysis();
+}
+
+// ─── ANALYSIS ───
+function runAnalysis(){
+  const sec=document.getElementById('analysisSection');
+  if(!userLines.length){ sec.style.display='none'; updateSavings(0); return; }
+  sec.style.display='block';
+  renderQuestions();
+  const recs=genRecs();
+  renderRecs(recs);
+  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+}
+
+function renderQuestions(){
+  const hasHome=userLines.some(l=>l.cat==='Home Internet');
+  const mob=userLines.filter(l=>l.cat==='Mobile');
+  const qs=[];
+
+  if(mob.length>=1){
+    qs.push({id:'reduce',label:'لو لقينالك باقة موبايل أرخص بنفس المستوى، تبي نشوفلك؟',
+      opts:['أي وبكل سرور','بس مو أقل من حد معين','لا، ابي أبقى بباقتي']});
+  }
+  if(mob.length>1){
+    qs.push({id:'family',label:`عندك ${mob.length} خطوط — هي كلها لأفراد العيلة؟`,
+      opts:['أي كلها عيلة','بعضها','لا كلها لي']});
+  }
+  if(!hasHome && mob.length){
+    qs.push({id:'wifi',label:'عندك فايبر أو واي فاي في البيت؟',
+      opts:['أي وأستخدمه وايد','أي بس مو دايم','لا ما عندي']});
+  }
+  qs.push({id:'switch',label:'لو لقينالك أوفر عند مشغّل ثاني، تبي تحوّل؟',
+    opts:['أي ما فيه مشكلة','ممكن بشوف','لا، أبقى مع مشغّلي']});
+
+  const lineInputs = mob.map(l=>`
+    <div class="question-card" id="qi_activation_${l.id}">
+      <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📅 متى جدّدت أو فعّلت باقتك؟</div>
+      <input type="date" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px;font-family:'Cairo',sans-serif"
+        id="activationDate_${l.id}"
+        max="${new Date().toISOString().split('T')[0]}"
+        value="${l.activationDate||''}"
+        onchange="updateActivationDate(${l.id}, this.value)">
+      <div style="font-size:11px;color:#aaa;margin-top:6px" id="activationDateInfo_${l.id}">
+        ${l.activationDate ? `فاضي <strong>${Math.max(1,Math.round((new Date()-new Date(l.activationDate))/(1000*60*60*24)))} يوم</strong> من تاريخ التفعيل` : 'هذا يساعدنا نحسب استهلاكك الشهري بدقة'}
+      </div>
+    </div>
+    <div class="question-card" id="qi_data_${l.id}">
+      <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📶 كم بقالك داتا في نهاية الشهر؟ (GB)</div>
+      <input type="number" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px"
+        id="dataLeft_${l.id}"
+        placeholder="مثال: 10" min="0" max="9999"
+        value="${l.dataLeft!==null?l.dataLeft:''}"
+        oninput="updateLineField(${l.id},'dataLeft',this.value)">
+      <div style="font-size:11px;color:#aaa;margin-top:6px">اتركه فاضي لو تنتهي قبل الشهر</div>
+      <button type="button" onclick="toggleConsumedMode(${l.id})"
+        style="margin-top:10px;background:var(--paper);border:var(--border);border-radius:999px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer"
+        id="toggleBtn_${l.id}">ما أعرف الباقي — بس أعرف كم استهلكت الحين</button>
+      <div id="consumedMode_${l.id}" style="display:none;margin-top:12px">
+        <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم GB استهلكت من بداية الشهر لحد الحين؟</div>
+        <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+          id="consumedInp_${l.id}"
+          placeholder="مثال: 5" min="0" max="9999"
+          oninput="calcFromConsumed(${l.id}, ${l.plan.data==='Unlimited'?9999:l.plan.data||0}, this.value)">
+        <div id="consumedResult_${l.id}" style="font-size:12px;color:var(--deep);font-weight:700;margin-top:8px"></div>
+      </div>
+    </div>
+    <div class="question-card" id="qi_mins_${l.id}">
+      <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📞 كم بقالك دقايق في نهاية الشهر؟</div>
+      <input type="number" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px"
+        id="minsLeft_${l.id}"
+        placeholder="مثال: 200" min="0" max="99999"
+        value="${l.minsLeft!==null?l.minsLeft:''}"
+        oninput="updateLineField(${l.id},'minsLeft',this.value)">
+      <div style="font-size:11px;color:#aaa;margin-top:6px">اتركه فاضي لو تنتهي قبل الشهر</div>
+      <button type="button" onclick="toggleMinsConsumedMode(${l.id})"
+        style="margin-top:10px;background:var(--paper);border:var(--border);border-radius:999px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer"
+        id="toggleMinsBtn_${l.id}">ما أعرف الباقي — بس أعرف كم استهلكت الحين</button>
+      <div id="consumedMinsMode_${l.id}" style="display:none;margin-top:12px">
+        <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم دقيقة استهلكت من بداية الشهر لحد الحين؟</div>
+        <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+          id="consumedMinsInp_${l.id}"
+          placeholder="مثال: 150" min="0" max="99999"
+          oninput="calcMinsFromConsumed(${l.id}, '${l.plan.minutes||''}', this.value)">
+        <div id="consumedMinsResult_${l.id}" style="font-size:12px;color:var(--deep);font-weight:700;margin-top:8px"></div>
+      </div>
+    </div>
+    <div class="question-card" id="qi_social_${l.id}">
+      ${(()=>{
+        const isUnlimited = l.plan.socialData==='Unlimited' || (typeof l.plan.socialData==='string' && l.plan.socialData.toLowerCase().includes('unlimited'));
+        const planSocialGB = isUnlimited ? null : (typeof l.plan.socialData==='number' ? l.plan.socialData : null);
+        if(isUnlimited) return `
+          <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📲 كم بقالك داتا سوشيال في نهاية الشهر؟</div>
+          <input type="text" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px;background:var(--paper);color:#666"
+            value="Unlimited — غير محدودة" disabled>
+          <div style="font-size:11px;color:#aaa;margin-top:6px">باقتك فيها سوشيال غير محدود ✅</div>
+        `;
+        return `
+          <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📲 كم بقالك داتا سوشيال في نهاية الشهر؟ (GB)</div>
+          <input type="number" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px"
+            id="socialLeft_${l.id}"
+            placeholder="مثال: 3" min="0" max="9999"
+            value="${l.socialDataLeft!==null?l.socialDataLeft:''}"
+            oninput="updateLineField(${l.id},'socialDataLeft',this.value)">
+          <div style="font-size:11px;color:#aaa;margin-top:6px">اتركه فاضي لو تنتهي قبل الشهر</div>
+          <button type="button" onclick="toggleSocialConsumedMode(${l.id})"
+            style="margin-top:10px;background:var(--paper);border:var(--border);border-radius:999px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer"
+            id="toggleSocialBtn_${l.id}">ما أعرف الباقي — بس أعرف كم استهلكت الحين</button>
+          <div id="consumedSocialMode_${l.id}" style="display:none;margin-top:12px">
+            <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم GB سوشيال استهلكت من بداية الشهر لحد الحين؟</div>
+            <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+              id="consumedSocialInp_${l.id}"
+              placeholder="مثال: 2" min="0" max="9999"
+              oninput="calcSocialFromConsumed(${l.id}, ${planSocialGB||0}, this.value)">
+            <div id="consumedSocialResult_${l.id}" style="font-size:12px;color:var(--deep);font-weight:700;margin-top:8px"></div>
+          </div>
+        `;
+      })()}
+    </div>
+  `).join('');
+
+  document.getElementById('analysisQuestions').innerHTML=
+    qs.map(q=>`
+      <div class="question-card" id="q_${q.id}">
+        <div class="q-label">${q.label}</div>
+        <div class="q-options">
+          ${q.opts.map((o,i)=>`
+            <button class="q-opt${userAns[q.id]===i?' active':''}" onclick="answer('${q.id}',${i},this)">${o}</button>
+          `).join('')}
+        </div>
+      </div>
+    `).join('') + lineInputs;
+}
+
+function updateLineField(id, field, val){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  line[field] = val!=='' ? parseFloat(val) : null;
+  const recs=genRecs();
+  renderRecs(recs);
+  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+}
+
+function toggleConsumedMode(id){
+  const panel = document.getElementById('consumedMode_'+id);
+  const btn   = document.getElementById('toggleBtn_'+id);
+  const directInp = document.getElementById('dataLeft_'+id);
+  const isOpen = panel.style.display !== 'none';
+  if(isOpen){
+    panel.style.display = 'none';
+    btn.textContent = 'ما أعرف الباقي — بس أعرف كم استهلكت الحين';
+    directInp.disabled = false;
+  } else {
+    panel.style.display = 'block';
+    btn.textContent = 'أعرف كم بقالي — أدخله مباشرة';
+    directInp.disabled = true;
+    directInp.value = '';
+    updateLineField(id, 'dataLeft', '');
+  }
+}
+
+function toggleMinsConsumedMode(id){
+  const panel = document.getElementById('consumedMinsMode_'+id);
+  const btn   = document.getElementById('toggleMinsBtn_'+id);
+  const directInp = document.getElementById('minsLeft_'+id);
+  const isOpen = panel.style.display !== 'none';
+  if(isOpen){
+    panel.style.display = 'none';
+    btn.textContent = 'ما أعرف الباقي — بس أعرف كم استهلكت الحين';
+    directInp.disabled = false;
+  } else {
+    panel.style.display = 'block';
+    btn.textContent = 'أعرف كم بقالي — أدخله مباشرة';
+    directInp.disabled = true;
+    directInp.value = '';
+    updateLineField(id, 'minsLeft', '');
+  }
+}
+
+function calcMinsFromConsumed(id, planMinsRaw, consumedVal){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  const consumed = parseFloat(consumedVal);
+  if(isNaN(consumed) || consumed < 0){
+    document.getElementById('consumedMinsResult_'+id).textContent = '';
+    updateLineField(id, 'minsLeft', '');
+    return;
+  }
+  const planMinsNum = (planMinsRaw && planMinsRaw !== 'Unlimited') ? parseFloat(planMinsRaw) : null;
+  const resultEl = document.getElementById('consumedMinsResult_'+id);
+  const daysDiff = getDaysDiff(line);
+  const estimatedMonthly = consumed * 30 / daysDiff;
+  line._consumedMins = estimatedMonthly;
+  if(!planMinsNum){
+    resultEl.textContent = `باقتك دقائق غير محدودة، استخدامك المتوقع للشهر: ${Math.round(estimatedMonthly)} دقيقة`;
+    line.minsLeft = null;
+  } else if(estimatedMonthly > planMinsNum){
+    resultEl.innerHTML = `<span style="color:#b91c1c;font-weight:800">⚠️ استهلاكك المتوقع ${Math.round(estimatedMonthly)} دقيقة — يتجاوز باقتك (${planMinsNum} دقيقة)</span>`;
+    line.minsLeft = 0;
+    document.getElementById('minsLeft_'+id).value = 0;
+  } else {
+    const remaining = Math.max(0, planMinsNum - estimatedMonthly);
+    resultEl.textContent = `التوقع: ${Math.round(estimatedMonthly)} دقيقة الشهر كله ← فاضيلك حوالي ${Math.round(remaining)} دقيقة`;
+    line.minsLeft = Math.round(remaining);
+    document.getElementById('minsLeft_'+id).value = Math.round(remaining);
+  }
+  const recs=genRecs();
+  renderRecs(recs);
+  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+}
+
+function toggleSocialConsumedMode(id){
+  const panel = document.getElementById('consumedSocialMode_'+id);
+  const btn   = document.getElementById('toggleSocialBtn_'+id);
+  const directInp = document.getElementById('socialLeft_'+id);
+  const isOpen = panel.style.display !== 'none';
+  if(isOpen){
+    panel.style.display='none';
+    btn.textContent='ما أعرف الباقي — بس أعرف كم استهلكت الحين';
+    directInp.disabled=false;
+  } else {
+    panel.style.display='block';
+    btn.textContent='أعرف كم بقالي — أدخله مباشرة';
+    directInp.disabled=true;
+    directInp.value='';
+    updateLineField(id,'socialDataLeft','');
+  }
+}
+
+function getDaysDiff(line){
+  if(line.activationDate){
+    const diff = Math.round((new Date() - new Date(line.activationDate)) / (1000*60*60*24));
+    return Math.max(1, diff);
+  }
+  // Fallback: day of month (old behaviour)
+  return new Date().getDate();
+}
+
+function updateActivationDate(id, val){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  line.activationDate = val || null;
+  const infoEl = document.getElementById('activationDateInfo_'+id);
+  if(infoEl && val){
+    const days = Math.max(1, Math.round((new Date()-new Date(val))/(1000*60*60*24)));
+    infoEl.innerHTML = `مضت <strong>${days} يوم</strong> من تاريخ التفعيل`;
+  }
+  const recs=genRecs();
+  renderRecs(recs);
+  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+}
+
+function calcSocialFromConsumed(id, planSocialGB, consumedVal){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  const consumed = parseFloat(consumedVal);
+  const resultEl = document.getElementById('consumedSocialResult_'+id);
+  if(isNaN(consumed) || consumed < 0){
+    resultEl.textContent='';
+    updateLineField(id,'socialDataLeft','');
+    return;
+  }
+  const daysDiff = getDaysDiff(line);
+  const estimatedMonthly = consumed * 30 / daysDiff;
+  if(!planSocialGB){
+    resultEl.textContent=`استخدامك المتوقع للشهر: ${estimatedMonthly.toFixed(1)} GB سوشيال`;
+    line.socialDataLeft=null;
+    return;
+  }
+  line._consumedSocial = estimatedMonthly;
+  if(estimatedMonthly > planSocialGB){
+    resultEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ استهلاكك المتوقع ${estimatedMonthly.toFixed(1)} GB سوشيال — يتجاوز باقتك (${planSocialGB} GB)</span>`;
+    line.socialDataLeft = 0;
+    document.getElementById('socialLeft_'+id).value = 0;
+  } else {
+    const remaining = Math.max(0, planSocialGB - estimatedMonthly);
+    resultEl.textContent=`التوقع: ${estimatedMonthly.toFixed(1)} GB الشهر كله ← فاضيلك حوالي ${remaining.toFixed(1)} GB سوشيال`;
+    line.socialDataLeft = parseFloat(remaining.toFixed(1));
+    document.getElementById('socialLeft_'+id).value = remaining.toFixed(1);
+  }
+  const recs=genRecs();
+  renderRecs(recs);
+  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+}
+
+function calcFromConsumed(id, planDataGB, consumedVal){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  const consumed = parseFloat(consumedVal);
+  if(isNaN(consumed) || consumed < 0){
+    document.getElementById('consumedResult_'+id).textContent = '';
+    updateLineField(id, 'dataLeft', '');
+    return;
+  }
+  const daysDiff = getDaysDiff(line);
+  const estimatedMonthly = consumed * 30 / daysDiff;
+  const remaining = planDataGB === 9999 ? null : Math.max(0, planDataGB - estimatedMonthly);
+  const resultEl = document.getElementById('consumedResult_'+id);
+  line._consumedData = estimatedMonthly;
+  if(remaining === null){
+    resultEl.textContent = `باقتك بيانات غير محدودة، استخدامك المتوقع للشهر: ${estimatedMonthly.toFixed(1)} GB`;
+    line.dataLeft = null;
+  } else if(estimatedMonthly > planDataGB){
+    resultEl.innerHTML = `<span style="color:#b91c1c;font-weight:800">⚠️ استهلاكك المتوقع ${estimatedMonthly.toFixed(1)} GB — يتجاوز باقتك (${planDataGB} GB)</span>`;
+    line.dataLeft = 0;
+    document.getElementById('dataLeft_'+id).value = 0;
+  } else {
+    resultEl.textContent = `التوقع: ${estimatedMonthly.toFixed(1)} GB الشهر كله ← فاضيلك حوالي ${remaining.toFixed(1)} GB`;
+    line.dataLeft = parseFloat(remaining.toFixed(1));
+    document.getElementById('dataLeft_'+id).value = remaining.toFixed(1);
+  }
+  const recs=genRecs();
+  renderRecs(recs);
+  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+}
+
+function answer(qid,idx,el){
+  document.querySelectorAll('#q_'+qid+' .q-opt').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  userAns[qid]=idx;
+  const recs=genRecs();
+  renderRecs(recs);
+  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+}
+
+// ─── RECOMMENDATION ENGINE ───
+function dataGB(plan){
+  if(plan.data==='Unlimited') return 9999;
+  if(typeof plan.data==='number') return plan.data;
+  return 0;
+}
+
+function socialGB(plan){
+  if(!plan.socialData) return 0;
+  const s = String(plan.socialData);
+  if(s.toLowerCase().includes('unlimited')) return 9999;
+  if(typeof plan.socialData==='number') return plan.socialData;
+  return 0;
+}
+
+function planMins(plan){
+  if(!plan.minutes) return 9999;
+  const s = String(plan.minutes);
+  if(s.toLowerCase().includes('unlimited')) return 9999;
+  const m = s.match(/(\d+)/);
+  return m ? parseInt(m[1]) : 9999;
+}
+
+const SPEED_MIN_MBPS=[100,300,500,1000];
+function minSpeedNeeded(){ return userAns.speed!==undefined ? SPEED_MIN_MBPS[userAns.speed]||100 : null; }
+function planSpeedMbps(p){ return p.downloadSpeed ? parseInt(p.downloadSpeed)||0 : 0; }
+
+function minDataNeeded(line, hasWifi){
+  const cur = dataGB(line.plan);
+  if(line.usage !== null) return line.usage * 1.3;
+  if(line._consumedData !== null && cur !== 9999) return line._consumedData * 1.3;
+  if(line.dataLeft !== null && cur !== 9999) return Math.max(1, cur - line.dataLeft) * 1.3;
+  if(hasWifi && line.cat==='Mobile') return cur * 0.5;
+  return cur * 0.8;
+}
+
+function minMinsNeeded(line){
+  const cur = planMins(line.plan);
+  if(cur === 9999) return 0;
+  if(line._consumedMins !== null) return line._consumedMins * 1.2;
+  if(line.minsLeft !== null) return Math.max(1, cur - line.minsLeft) * 1.2;
+  return cur * 0.8;
+}
+
+function minSocialNeeded(line){
+  const cur = socialGB(line.plan);
+  if(cur === 9999) return 9999;
+  if(cur === 0) return 0;
+  if(line._consumedSocial !== null) return line._consumedSocial * 1.3;
+  if(line.socialDataLeft !== null) return Math.max(1, cur - line.socialDataLeft) * 1.3;
+  return cur * 0.8;
+}
+
+let _overconsumptionWarnings = [];
+
+function getLineOverconsumption(line){
+  const alerts = [];
+  const curData   = dataGB(line.plan);
+  const curMins   = planMins(line.plan);
+  const curSocial = socialGB(line.plan);
+
+  if(curData !== 9999 && line._consumedData !== null && line._consumedData > curData)
+    alerts.push({field:'data', consumed: line._consumedData.toFixed(1), limit: curData, excess: (line._consumedData - curData).toFixed(1)});
+
+  if(curMins !== 9999 && line._consumedMins !== null && line._consumedMins > curMins)
+    alerts.push({field:'mins', consumed: Math.round(line._consumedMins), limit: curMins, excess: Math.round(line._consumedMins - curMins)});
+
+  if(curSocial !== 0 && curSocial !== 9999 && line._consumedSocial !== null && line._consumedSocial > curSocial)
+    alerts.push({field:'social', consumed: line._consumedSocial.toFixed(1), limit: curSocial, excess: (line._consumedSocial - curSocial).toFixed(1)});
+
+  return alerts;
+}
+
+function genRecs(){
+  _overconsumptionWarnings = [];
+  const hasHome=userLines.some(l=>l.cat==='Home Internet');
+  const hasWifi=userAns.wifi===0||userAns.wifi===1||hasHome;
+  const wantSwitch=userAns.switch!==2;
+  const minSpd=minSpeedNeeded();
+
+  return userLines.map(line=>{
+    const curPrice=line.plan.price;
+    if(line.cat==='Home Internet' && !line.minSpeedMbps) return null;
+
+    const minData   = minDataNeeded(line, hasWifi);
+    const minMin    = minMinsNeeded(line);
+    const minSocial = minSocialNeeded(line);
+
+    let pool=PLANS.filter(p=>{
+      if(p.category!==line.cat) return false;
+      if(p.price>=curPrice-10) return false;
+
+      if(line.cat==='Mobile'){
+        // 1. Local data
+        const pData = dataGB(p);
+        if(pData!==9999 && pData<minData) return false;
+
+        // 2. Minutes
+        const pMin = planMins(p);
+        if(pMin!==9999 && pMin<minMin) return false;
+
+        // 3. Social data — if current plan has unlimited social, only accept unlimited
+        const pSocial = socialGB(p);
+        if(minSocial===9999 && pSocial!==9999) return false;
+        if(minSocial>0 && minSocial<9999 && pSocial!==9999 && pSocial<minSocial) return false;
+      }
+
+      if(line.cat==='Home Internet'){
+        const reqSpd=line.minSpeedMbps||100;
+        const spd=planSpeedMbps(p);
+        if(spd>0 && spd<reqSpd) return false;
+      }
+
+      return true;
+    });
+
+    if(!wantSwitch) pool=pool.filter(p=>p.operator===line.op);
+
+    if(!pool.length){
+      // No cheaper plan — check if overconsumption, then find the cheapest plan that covers actual usage
+      const overAlerts = getLineOverconsumption(line);
+      if(overAlerts.length){
+        _overconsumptionWarnings.push({line, alerts: overAlerts});
+        let upgradePool = PLANS.filter(p=>{
+          if(p.category!==line.cat) return false;
+          if(p.price===line.plan.price) return false; // exclude same plan
+          const pData=dataGB(p);
+          if(pData!==9999 && pData<minData) return false;
+          const pMin=planMins(p);
+          if(pMin!==9999 && pMin<minMin) return false;
+          const pSoc=socialGB(p);
+          if(minSocial===9999 && pSoc!==9999) return false;
+          if(minSocial>0 && minSocial<9999 && pSoc!==9999 && pSoc<minSocial) return false;
+          return true;
+        });
+        if(!wantSwitch) upgradePool=upgradePool.filter(p=>p.operator===line.op);
+        upgradePool.sort((a,b)=>a.price-b.price);
+        const best=upgradePool[0];
+        if(best){
+          const saving=line.plan.price-best.price; // negative = costs more
+          return {line, cur:line.plan, rec:best, saving, reasons:buildReasons(line,best,hasWifi,minData,minMin,minSocial,minSpd), isOverconsumption:true, overAlerts};
+        }
+      }
+      return null;
+    }
+
+    const scored=pool.map(p=>([scorePlan(p,line,minData,minMin,minSocial,hasWifi),p]))
+      .sort((a,b)=>b[0]-a[0]||a[1].price-b[1].price);
+
+    const best=scored[0][1];
+    const saving=curPrice-best.price;
+    if(saving<10) return null;
+
+    return {line, cur:line.plan, rec:best, saving, reasons:buildReasons(line,best,hasWifi,minData,minMin,minSocial,minSpd)};
+  }).filter(Boolean);
+}
+
+function scorePlan(p, line, minData, minMin, minSocial, hasWifi){
+  let s=0;
+  const pData=dataGB(p);
+  const curData=dataGB(line.plan);
+  const pMin=planMins(p);
+  const curMin=planMins(line.plan);
+  const pSocial=socialGB(p);
+
+  // ── Local data fit ──
+  if(line.dataLeft!==null || line.usage!==null){
+    const needed=minData;
+    if(pData>=needed && pData<needed*1.8) s+=12;
+    else if(pData>=needed && pData<needed*3) s+=6;
+    else if(pData===9999) s+=3;
+  } else {
+    const ratio=pData===9999?1.0:pData/curData;
+    if(ratio>=0.9) s+=8;
+    else if(ratio>=0.7) s+=5;
+    else if(ratio>=0.5) s+=2;
+  }
+
+  // ── Minutes fit — reward plans close to what they need (not massive excess) ──
+  if(minMin>0 && curMin!==9999){
+    if(pMin===9999) s+=2; // unlimited is fine but slight penalise (might be overkill)
+    else if(pMin>=minMin && pMin<minMin*1.5) s+=8; // tight fit
+    else if(pMin>=minMin && pMin<minMin*2.5) s+=4;
+  }
+
+  // ── Social data fit ──
+  if(minSocial===9999){
+    if(pSocial===9999) s+=6; // unlimited matches unlimited
+  } else if(minSocial>0){
+    if(pSocial===9999) s+=4;
+    else if(pSocial>=minSocial && pSocial<minSocial*2) s+=6;
+    else if(pSocial>=minSocial) s+=3;
+  }
+
+  // ── Same operator ──
+  if(p.operator===line.op) s+=3;
+
+  // ── Meaningful saving ──
+  const savingPct=(line.plan.price-p.price)/line.plan.price;
+  if(savingPct>=0.1 && savingPct<=0.5) s+=4;
+  else if(savingPct>0.5) s-=2;
+
+  if(line.cat==='Home Internet' && p.downloadSpeed){
+    const spd=parseInt(p.downloadSpeed)||0;
+    if(spd>=1000)s+=4; else if(spd>=500)s+=3; else if(spd>=300)s+=2;
+  }
+
+  return s;
+}
+
+function buildReasons(line, rec, hasWifi, minData, minMin, minSocial, minSpd){
+  const rs=[];
+  const recData=dataGB(rec);
+  const sv=Math.round(line.plan.price-rec.price);
+
+  if(line.cat==='Home Internet'){
+    const recSpd=planSpeedMbps(rec);
+    const reqSpd=line.minSpeedMbps||100;
+    rs.push(`الباقة الموصى فيها تعطيك ${recSpd} Mbps وهذا فوق الحد الأدنى اللي حددته (${reqSpd} Mbps)`);
+    rs.push('الداتا في كلاهما غير محدودة، الفرق بس في السرعة والسعر');
+  } else if(line.usage!==null){
+    const dLabel=recData===9999?'غير محدودة':recData+' GB';
+    rs.push(`استخدامك الشهر اللي فات ${line.usage} GB، وهذي الباقة (${dLabel}) تكفيك براحة مع هامش أمان`);
+  } else if(line.dataLeft!==null){
+    const used=Math.max(1, dataGB(line.plan)-line.dataLeft);
+    const dLabel=recData===9999?'غير محدودة':recData+' GB';
+    rs.push(`بقالك ${line.dataLeft} GB في نهاية الشهر — يعني استخدامك الفعلي ${Math.round(used)} GB بس، وهذي الباقة (${dLabel}) تكفيك براحة`);
+  } else if(hasWifi && line.cat==='Mobile'){
+    rs.push('عندك واي فاي في البيت يغطيك، فالداتا اللي تحتاجها على الجوال بس برّا البيت');
+    const dLabel=recData===9999?'غير محدودة':recData+' GB';
+    rs.push(`الباقة المقترحة (${dLabel}) تكفي للاستخدام برّا البيت`);
+  } else {
+    const dLabel=recData===9999?'غير محدودة':recData+' GB';
+    rs.push(`نفس مستوى الداتا تقريباً (${dLabel}) بسعر أوفر`);
+  }
+
+  // Minutes reason
+  const recMins = planMins(rec);
+  if(line.minsLeft!==null){
+    const used = Math.max(1, planMins(line.plan)===9999 ? minMin : planMins(line.plan)-line.minsLeft);
+    const mLabel = recMins===9999 ? 'غير محدودة' : recMins+' دقيقة';
+    if(line.minsLeft>100)
+      rs.push(`عندك ${line.minsLeft} دقيقة فاضية — يعني استخدامك الفعلي ${Math.round(used)} دقيقة بس، والباقة المقترحة (${mLabel}) تكفيك`);
+  }
+
+  // Social data reason
+  const recSocial = socialGB(rec);
+  if(line.socialDataLeft!==null && socialGB(line.plan)!==9999){
+    const socialLabel = recSocial===9999 ? 'غير محدودة' : recSocial+' GB';
+    rs.push(`داتا السوشيال في الباقة المقترحة (${socialLabel}) تغطي استخدامك الفعلي`);
+  } else if(socialGB(line.plan)===9999 && recSocial===9999){
+    rs.push('الباقة المقترحة فيها سوشيال غير محدود مثل باقتك الحالية ✅');
+  }
+
+  if(rec.operator!==line.op)
+    rs.push(`${OPERATOR_AR[rec.operator]||rec.operator} يعطيك نفس الخدمة بسعر أقل هالفترة`);
+
+  rs.push(`توفير ${sv} ريال/شهر = ${sv*12} ريال كل سنة`);
+
+  const mob=userLines.filter(l=>l.cat==='Mobile');
+  if(mob.length>1 && line.cat==='Mobile')
+    rs.push(`عندك ${mob.length} خطوط موبايل — لو خفّضت كلها يكون التوفير أكبر`);
+
+  return rs;
+}
+
+// ─── RENDER RECS ───
+let _lastRecs = [];
+
+function renderRecs(recs){
+  _lastRecs = recs;
+  const sec=document.getElementById('recommendationsSection');
+  const lst=document.getElementById('recommendationsList');
+  sec.style.display='block';
+
+  if(!resultsRevealed){
+    lst.innerHTML='';
+    const band=document.getElementById('savingsBandContent');
+    if(band) band.innerHTML=`
+      <div style="text-align:center;padding:16px 0 8px">
+        <button class="btn-hero-primary" onclick="revealResults()" style="font-size:17px;padding:18px 40px">
+          اكشف نتيجتك ←
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  _renderRevealedRecs(recs);
+}
+
+function revealResults(){
+  resultsRevealed = true;
+  _renderRevealedRecs(_lastRecs);
+}
+
+function _renderRevealedRecs(recs){
+  const lst=document.getElementById('recommendationsList');
+  const band=document.getElementById('savingsBandContent');
+  const annualSaving=Math.round(recs.reduce((s,r)=>s+r.saving,0)*12);
+
+  const badge = document.getElementById('savingsStatusBadge');
+
+  if(!recs.length){
+    const hasOverconsumption = _overconsumptionWarnings.length > 0;
+
+    if(badge) badge.innerHTML=`
+      <div style="padding:20px 0 0;display:flex;justify-content:center">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:${hasOverconsumption?'#fef3c7':'#4ade80'};color:${hasOverconsumption?'#92400e':'#14532d'};border:${hasOverconsumption?'2px solid #f59e0b':' var(--border)'};border-radius:999px;padding:10px 24px;font-size:15px;font-weight:800;box-shadow:var(--shadow-sm)">
+          ${hasOverconsumption ? '📊 أنت على الباقة الصح — بس استهلاكك عالي' : '✅ رائع! أنت على أفضل خيار'}
+        </div>
+      </div>
+    `;
+    if(band) band.innerHTML=`
+      <div class="savings-amount" id="savingsAmount" style="font-size:72px">0</div>
+      <div class="savings-unit">ريال / السنة</div>
+      <div class="savings-sub" id="savingsSub">${hasOverconsumption ? 'ما في باقة أرخص تغطي استهلاكك الحالي' : 'ما لقينا باقة أوفر بناءً على اختياراتك'}</div>
+    `;
+
+    if(hasOverconsumption){
+      const fieldLabel = {data:'📶 داتا محلية', mins:'📞 دقائق', social:'📲 داتا سوشيال'};
+      const fieldUnit  = {data:'GB', mins:'دقيقة', social:'GB'};
+      lst.innerHTML = _overconsumptionWarnings.map(w=>{
+        const lName = w.line.plan.name;
+        const items = w.alerts.map(a=>`
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed #e5e7eb">
+            <div>
+              <div style="font-size:14px;font-weight:800">${fieldLabel[a.field]}</div>
+              <div style="font-size:12px;color:#666;margin-top:3px">استهلاكك المتوقع: <strong>${a.consumed} ${fieldUnit[a.field]}</strong> — الباقة تعطيك: <strong>${a.limit} ${fieldUnit[a.field]}</strong></div>
+            </div>
+            <div style="background:#fee2e2;color:#b91c1c;border:2px solid #f87171;border-radius:999px;padding:5px 14px;font-size:12px;font-weight:800;white-space:nowrap">
+              زيادة ${a.excess} ${fieldUnit[a.field]}
+            </div>
+          </div>
+        `).join('');
+        return `
+          <div style="border:var(--border);border-radius:20px;background:#fffbeb;box-shadow:var(--shadow);padding:28px;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:800;color:#92400e;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">تحليل الاستهلاك — ${lName}</div>
+            <div style="font-size:18px;font-weight:900;color:#191919;margin-bottom:20px">استهلاكك يتجاوز حدود باقتك الحالية</div>
+            ${items}
+            <div style="margin-top:20px;background:#fff;border:var(--border);border-radius:14px;padding:16px 20px">
+              <div style="font-size:13px;font-weight:800;color:#5b3fa6;margin-bottom:6px">💡 وش يعني هذا؟</div>
+              <div style="font-size:14px;line-height:1.8;color:#333">
+                لو خفّضت استهلاكك لحدود باقتك، ما في داعي تغيّر — أنت على الباقة المناسبة.<br>
+                لو استمريت على نفس الاستهلاك، باقتك الحالية ما تكفيك وقد تحتاج باقة أعلى.
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      lst.innerHTML='';
+    }
+    return;
+  }
+
+  const normalRecs = recs.filter(r=>!r.isOverconsumption);
+  const overRecs   = recs.filter(r=> r.isOverconsumption);
+  const annualNormal = Math.round(normalRecs.reduce((s,r)=>s+r.saving,0)*12);
+
+  if(overRecs.length && !normalRecs.length){
+    // Only overconsumption recs — badge is amber
+    if(badge) badge.innerHTML=`
+      <div style="padding:20px 0 0;display:flex;justify-content:center">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:#fef3c7;color:#92400e;border:2px solid #f59e0b;border-radius:999px;padding:10px 24px;font-size:15px;font-weight:800;box-shadow:var(--shadow-sm)">
+          📊 استهلاكك أعلى من باقتك
+        </div>
+      </div>
+    `;
+    const extraMonthly = Math.round(overRecs.reduce((s,r)=>s+Math.abs(r.saving),0));
+    if(band) band.innerHTML=`
+      <div class="savings-amount" id="savingsAmount" style="font-size:60px;color:#b45309">${(extraMonthly*12).toLocaleString()}</div>
+      <div class="savings-unit">ريال / السنة إضافية</div>
+      <div class="savings-sub" id="savingsSub">تكلفة الباقة اللي تغطي استهلاكك الحالي</div>
+    `;
+  } else {
+    if(badge) badge.innerHTML=`
+      <div style="padding:20px 0 0;display:flex;justify-content:center">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:#fee2e2;color:#b91c1c;border:2px solid #f87171;border-radius:999px;padding:10px 24px;font-size:15px;font-weight:800;box-shadow:var(--shadow-sm)">
+          ⚠️ أنت مو على أفضل خيار حالياً
+        </div>
+      </div>
+    `;
+    if(band) band.innerHTML=`
+      <div class="savings-amount active" id="savingsAmount">${annualNormal.toLocaleString()}</div>
+      <div class="savings-unit">ريال / السنة</div>
+      <div class="savings-sub" id="savingsSub">هذا اللي تقدر توفّره لو اتبعت توصيات صوب</div>
+    `;
+  }
+
+  function recCardHtml(r){
+    const isOver = r.isOverconsumption;
+    const extraMonthly = isOver ? Math.abs(r.saving) : 0;
+    const fieldLabel = {data:'📶 داتا', mins:'📞 دقائق', social:'📲 سوشيال'};
+    const fieldUnit  = {data:'GB', mins:'دقيقة', social:'GB'};
+
+    const overBreakdown = isOver && r.overAlerts ? r.overAlerts.map(a=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed #e5e7eb;font-size:13px">
+        <span style="font-weight:700">${fieldLabel[a.field]}</span>
+        <span style="color:#666">استخدامك <strong>${a.consumed} ${fieldUnit[a.field]}</strong> ← الباقة الحالية <strong>${a.limit} ${fieldUnit[a.field]}</strong></span>
+      </div>
+    `).join('') : '';
+
+    const headerBanner = isOver ? `
+      <div style="background:#fffbeb;border:2px solid #f59e0b;border-radius:12px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px">📊</span>
+        <span style="font-size:14px;font-weight:800;color:#92400e">استهلاكك يتجاوز باقتك الحالية — هذي أنسب باقة لاستخدامك</span>
+      </div>
+    ` : `
+      <div style="background:#fff3f0;border:2px solid #f87171;border-radius:12px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px">⚠️</span>
+        <span style="font-size:14px;font-weight:800;color:#b91c1c">أنت مو على أفضل خيار حالياً</span>
+      </div>
+    `;
+
+    const priceDir = isOver ? (r.rec.price > r.cur.price ? '↑' : '↓') : '←';
+    const recLabel = isOver ? 'الباقة المناسبة لاستهلاكك' : 'التوصية';
+    const recLabelColor = isOver ? '#92400e' : '#16a34a';
+    const recPriceClass = isOver && r.rec.price > r.cur.price ? 'orange' : (isOver ? 'green' : 'green');
+
+    const savingsBarHtml = isOver
+      ? `<div class="savings-bar" style="background:#fef9c3;border-color:#f59e0b">
+           <span class="sb-label">فرق السعر الشهري</span>
+           <span class="sb-amount" style="color:#92400e">${extraMonthly > 0 ? '+' : ''}${Math.round(r.saving*-1)} ريال / شهر</span>
+         </div>`
+      : `<div class="savings-bar">
+           <span class="sb-label">توفير سنوي</span>
+           <span class="sb-amount">${Math.round(r.saving*12)} ريال / سنة</span>
+         </div>`;
+
+    return `
+    <div class="rec-card">
+      ${headerBanner}
+      <div class="rec-head">
+        <div>
+          <div class="rec-title">${TYPE_CFG[r.line.type].icon} ${isOver ? 'الباقة اللي تناسب استهلاكك' : 'لقينالك خيار أوفر'}</div>
+          <div class="rec-sub">${TYPE_CFG[r.line.type].label} • ${OPERATOR_AR[r.line.op]||r.line.op}</div>
+        </div>
+        <div class="rec-badge" style="${isOver?'background:#fef3c7;color:#92400e;border-color:#f59e0b':''}">${isOver ? `${r.rec.price} ريال/شهر` : `توفير ${Math.round(r.saving)} ريال/شهر`}</div>
+      </div>
+
+      ${isOver && overBreakdown ? `<div style="margin-bottom:16px">${overBreakdown}</div>` : ''}
+
+      <div class="rec-plans">
+        <div class="rec-plan cur">
+          <div class="rp-label">باقتك الحالية</div>
+          <div class="rp-op">${OPERATOR_AR[r.cur.operator]||r.cur.operator}</div>
+          <div class="rp-name">${r.cur.name}</div>
+          <div class="rp-price red">${r.cur.price} ريال</div>
+        </div>
+        <div class="rec-arrow">${priceDir}</div>
+        <div class="rec-plan best">
+          <div class="rp-label" style="color:${recLabelColor}">${recLabel}</div>
+          <div class="rp-op">${OPERATOR_AR[r.rec.operator]||r.rec.operator}</div>
+          <div class="rp-name">${r.rec.name}</div>
+          <div class="rp-price ${recPriceClass}">${r.rec.price} ريال</div>
+        </div>
+      </div>
+
+      ${savingsBarHtml}
+
+      ${r.reasons.length?`
+        <div class="reason-box">
+          <div class="reason-title">ليش هذي التوصية؟</div>
+          ${r.reasons.map(x=>`<div class="reason-item"><span>•</span><span>${x}</span></div>`).join('')}
+        </div>
+      `:''}
+
+      <div class="rec-cta">
+        <button class="btn-switch" onclick="doSwitch('${r.rec.name}','${r.rec.operator}')">${isOver ? 'أبي أرقّي باقتي ←' : 'أبي أحوّل ←'}</button>
+        <button class="btn-keep" onclick="doKeep('${r.line.id}','${r.rec.name}','${r.rec.price}')">أحافظ رقمي + ضيف خط جديد</button>
+      </div>
+      <div style="margin-top:16px;background:#fefce8;border:2px solid #facc15;border-radius:20px;padding:28px 24px;display:flex;align-items:flex-start;gap:16px">
+        <span style="font-size:40px;flex-shrink:0">💡</span>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:#92400e;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">معلومة مهمة</div>
+          <div style="font-size:18px;font-weight:800;color:#78350f;line-height:1.6">هل تعلم أن مطعم واجيو كان أفضل مطعم في الرياض لعامَي 2024 و2025؟ 🥩</div>
+        </div>
+      </div>
+    </div>
+  `;
+  }
+
+  lst.innerHTML = [...normalRecs, ...overRecs].map(recCardHtml).join('');
+
+  // Survey CTA at the bottom
+  document.getElementById('recommendationsList').insertAdjacentHTML('beforeend',`
+    <div style="text-align:center;padding:40px 24px 0">
+      <div style="font-size:15px;color:#666;margin-bottom:18px">خلّنا نعرف عنك أكثر 👇</div>
+      <a href="soob-survey.html" class="btn-hero-primary" style="font-size:22px;padding:24px 56px;text-decoration:none;display:inline-block">
+        سجّل معلوماتي ←
+      </a>
+    </div>
+  `);
+}
+
+function doSwitch(name,op){
+  alert('تمام! راح نساعدك تحول لباقة "'+name+'" عند '+(OPERATOR_AR[op]||op)+'\n\nهذي الميزة قريباً في صوب 🎉');
+}
+
+function doKeep(id,recName,recPrice){
+  document.getElementById('modal').style.display='flex';
+  setModal('احتفظ برقمك + ضيف خط جديد',`
+    <div class="keep-info">
+      <div class="keep-title">الحل الذكي 💡</div>
+      <div class="keep-steps">
+        ١. ابقى على خطك القديم وما تغيّر رقمك<br>
+        ٢. ضيف خط جديد بـ ${recPrice} ريال/شهر<br>
+        ٣. استخدم الخط الجديد للداتا والإنترنت<br>
+        ٤. وفّر فلوس كل شهر وما غيّرت رقمك
+      </div>
+    </div>
+    <div style="background:var(--paper);border:var(--border);padding:14px;margin-bottom:18px;border-radius:14px">
+      <div style="font-size:13px;color:#777;margin-bottom:4px">الباقة المقترحة للخط الجديد</div>
+      <div style="font-size:18px;font-weight:800">${recName}</div>
+      <div style="font-size:22px;font-weight:900;color:var(--deep)">${recPrice} ريال/شهر</div>
+    </div>
+    <button class="btn-confirm" onclick="closeModal()">زين، راح أفكّر فيها ✓</button>
+    <button class="btn-back" onclick="closeModal()">تراجع</button>
+  `);
+}
+
+// ─── SURVEY ───
+const surveyData = {};
+
+function openSurvey(){ surveyData.restaurants=[]; surveyStep(1); document.getElementById('modal').style.display='flex'; }
+
+function surveyStep(n){
+  const steps = {
+    1: {
+      title:'وش اسمك؟',
+      html:`
+        <input type="text" class="form-input" id="sv_name" placeholder="اسمك الأول" style="margin-bottom:8px" value="${surveyData.name||''}">
+        <button class="btn-confirm" onclick="svNext(1)">التالي ←</button>
+      `
+    },
+    2: {
+      title:'الجنس',
+      html:`
+        <div class="op-grid">
+          <button class="op-btn${surveyData.gender==='ذكر'?' active':''}" onclick="svPick('gender','ذكر',this)">👨 ذكر</button>
+          <button class="op-btn${surveyData.gender==='أنثى'?' active':''}" onclick="svPick('gender','أنثى',this)">👩 أنثى</button>
+        </div>
+        <button class="btn-confirm" onclick="svNext(2)">التالي ←</button>
+        <button class="btn-back" onclick="surveyStep(1)">← رجوع</button>
+      `
+    },
+    3: {
+      title:'الفئة العمرية',
+      html:`
+        <div class="op-grid">
+          ${['18-24','25-34','35-44','45+'].map(a=>`
+            <button class="op-btn${surveyData.age===a?' active':''}" onclick="svPick('age','${a}',this)">${a}</button>
+          `).join('')}
+        </div>
+        <button class="btn-confirm" onclick="svNext(3)">التالي ←</button>
+        <button class="btn-back" onclick="surveyStep(2)">← رجوع</button>
+      `
+    },
+    4: {
+      title:'وش رأيك بصوب؟',
+      html:`
+        <div class="op-grid">
+          ${['ممتاز 🔥','زين 👍','عادي 😐','يحتاج تحسين 🔧'].map(o=>`
+            <button class="op-btn${surveyData.opinion===o?' active':''}" onclick="svPick('opinion','${o}',this)">${o}</button>
+          `).join('')}
+        </div>
+        <button class="btn-confirm" onclick="svNext(4)">التالي ←</button>
+        <button class="btn-back" onclick="surveyStep(3)">← رجوع</button>
+      `
+    },
+    5: {
+      title:'تنصح أصحابك بصوب؟',
+      html:`
+        <div class="op-grid">
+          ${['أي وأكيد 🙌','ممكن 🤔','ما أعرف 😅','لا 🙅'].map(o=>`
+            <button class="op-btn${surveyData.recommend===o?' active':''}" onclick="svPick('recommend','${o}',this)">${o}</button>
+          `).join('')}
+        </div>
+        <button class="btn-confirm" onclick="svNext(5)">التالي ←</button>
+        <button class="btn-back" onclick="surveyStep(4)">← رجوع</button>
+      `
+    },
+    6: {
+      title:'من أي دولة؟',
+      html:`
+        <input type="text" class="form-input" id="sv_country" placeholder="مثال: المملكة العربية السعودية" style="margin-bottom:8px" value="${surveyData.country||''}">
+        <button class="btn-confirm" onclick="svNext(6)">التالي ←</button>
+        <button class="btn-back" onclick="surveyStep(5)">← رجوع</button>
+      `
+    },
+    7: {
+      title:'من أي مدينة؟',
+      html:`
+        <input type="text" class="form-input" id="sv_city" placeholder="مثال: الرياض" style="margin-bottom:8px" value="${surveyData.city||''}">
+        <button class="btn-confirm" onclick="svNext(7)">التالي ←</button>
+        <button class="btn-back" onclick="surveyStep(6)">← رجوع</button>
+      `
+    },
+    8: {
+      title:'وش هواياتك؟ (اختار أكثر من واحدة)',
+      html:`
+        <div class="q-options" style="margin-bottom:20px">
+          ${['⚽ رياضة','🎨 فن','🎵 موسيقى','✈️ سفر','🍕 أكل','💻 تقنية','🎮 ألعاب','📚 قراءة'].map(h=>`
+            <button class="q-opt${(surveyData.hobbies||[]).includes(h)?' active':''}"
+              onclick="svToggle('hobbies','${h}',this)">${h}</button>
+          `).join('')}
+        </div>
+        <button class="btn-confirm" onclick="svNext(8)">التالي ←</button>
+        <button class="btn-back" onclick="surveyStep(7)">← رجوع</button>
+      `
+    },
+    9: {
+      title:'اختار مطعمين تنصح فيهم 🍽️',
+      html:`
+        <div style="font-size:12px;color:#888;margin-bottom:14px">اختار اثنين بالضبط</div>
+        <div class="q-options" style="margin-bottom:20px">
+          ${['88 Portions','Primecut','Five Guys','الأسياخ','Wagyu','أخرى'].map(r=>`
+            <button class="q-opt${(surveyData.restaurants||[]).includes(r)?' active':''}"
+              onclick="svToggleRest('${r}',this)">${r}</button>
+          `).join('')}
+        </div>
+        <div id="restErr" style="color:#b91c1c;font-size:12px;margin-bottom:10px;display:none">اختار مطعمين بالضبط</div>
+        <button class="btn-confirm" onclick="svNext(9)">خلّصت ✓</button>
+        <button class="btn-back" onclick="surveyStep(8)">← رجوع</button>
+      `
+    }
+  };
+  const s = steps[n];
+  if(!s) return;
+  const prog = Math.round((n/9)*100);
+  setModal(s.title,`
+    <div style="background:var(--paper);border-radius:999px;height:6px;margin-bottom:24px;overflow:hidden;border:1px solid #d4c8bc">
+      <div style="height:100%;width:${prog}%;background:var(--sunset);border-radius:999px;transition:width .3s"></div>
+    </div>
+    <div style="font-size:11px;color:#aaa;margin-bottom:18px;text-align:left">${n} / 9</div>
+    ${s.html}
+  `);
+}
+
+function svPick(field, val, el){
+  surveyData[field]=val;
+  el.closest('.op-grid').querySelectorAll('.op-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function svToggle(field, val, el){
+  if(!surveyData[field]) surveyData[field]=[];
+  const idx=surveyData[field].indexOf(val);
+  if(idx>=0){ surveyData[field].splice(idx,1); el.classList.remove('active'); }
+  else { surveyData[field].push(val); el.classList.add('active'); }
+}
+
+function svToggleRest(val, el){
+  if(!surveyData.restaurants) surveyData.restaurants=[];
+  const idx=surveyData.restaurants.indexOf(val);
+  if(idx>=0){ surveyData.restaurants.splice(idx,1); el.classList.remove('active'); }
+  else if(surveyData.restaurants.length<2){ surveyData.restaurants.push(val); el.classList.add('active'); }
+}
+
+function svNext(step){
+  if(step===1){ surveyData.name=document.getElementById('sv_name')?.value||''; }
+  if(step===6){ surveyData.country=document.getElementById('sv_country')?.value||''; }
+  if(step===7){ surveyData.city=document.getElementById('sv_city')?.value||''; }
+  if(step===9){
+    if((surveyData.restaurants||[]).length!==2){
+      document.getElementById('restErr').style.display='block'; return;
+    }
+    svDone(); return;
+  }
+  surveyStep(step+1);
+}
+
+function svDone(){
+  setModal('شكراً لك! 🎉',`
+    <div style="text-align:center;padding:24px 0 16px">
+      <div style="font-size:64px;margin-bottom:16px">🙌</div>
+      <div style="font-size:22px;font-weight:900;margin-bottom:10px">تم التسجيل بنجاح</div>
+      <div style="font-size:15px;color:#666;line-height:1.7;margin-bottom:28px">
+        شكراً ${surveyData.name||''}! رأيك يهمنا وراح يساعدنا نحسّن صوب أكثر 💜
+      </div>
+      <div style="background:var(--paper);border:var(--border);border-radius:14px;padding:18px;text-align:right;margin-bottom:24px;font-size:13px;line-height:2">
+        <strong>المطاعم اللي اخترتها:</strong> ${(surveyData.restaurants||[]).join(' • ')}
+      </div>
+      <button class="btn-confirm" onclick="closeModal()">إغلاق ✓</button>
+    </div>
+  `);
+}
+
+// ─── SAVINGS COUNTER ───
+let savTarget=0, savCur=0, animF;
+function updateSavings(t){
+  savTarget=t;
+  cancelAnimationFrame(animF);
+  if(!resultsRevealed) return; // don't animate until revealed
+  animSav();
+}
+function animSav(){
+  const diff=savTarget-savCur;
+  if(Math.abs(diff)<0.5){ savCur=savTarget; draw(); return; }
+  savCur+=diff*0.14;
+  draw();
+  animF=requestAnimationFrame(animSav);
+}
+function draw(){
+  document.getElementById('savingsAmount').textContent=
+    Math.round(savCur).toLocaleString('ar-SA');
+}
+</script>
+</body>
+</html>
