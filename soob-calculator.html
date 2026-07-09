@@ -1518,14 +1518,17 @@ function genRecs(){
     if(!wantSwitch) pool=pool.filter(p=>p.operator===line.op);
     pool.sort((a,b)=>a.price-b.price);
 
+    // Always check if current plan can handle projected consumption
+    const overAlerts = getLineOverconsumption(line);
+    const isOver = overAlerts.length > 0;
+
     if(!pool.length){
-      // No cheaper plan — check if overconsumption, then find the cheapest plan that covers actual usage
-      const overAlerts = getLineOverconsumption(line);
-      if(overAlerts.length){
+      if(isOver){
         _overconsumptionWarnings.push({line, alerts: overAlerts});
+        // Find cheapest plan (any price) that covers actual usage
         let upgradePool = PLANS.filter(p=>{
           if(p.category!==line.cat) return false;
-          if(p.price===line.plan.price) return false; // exclude same plan
+          if(p.price===line.plan.price) return false;
           const pData=dataGB(p);
           if(pData!==9999 && pData<minData) return false;
           const pMin=planMins(p);
@@ -1539,7 +1542,7 @@ function genRecs(){
         upgradePool.sort((a,b)=>a.price-b.price);
         const best=upgradePool[0];
         if(best){
-          const saving=line.plan.price-best.price; // negative = costs more
+          const saving=line.plan.price-best.price;
           return {line, cur:line.plan, rec:best, saving, reasons:buildReasons(line,best,hasWifi,minData,minMin,minSocial,minSpd), isOverconsumption:true, overAlerts};
         }
       }
@@ -1548,6 +1551,12 @@ function genRecs(){
 
     const best=pool[0];
     const saving=curPrice-best.price;
+
+    // Even if a cheaper plan exists, flag overconsumption on current plan
+    if(isOver){
+      _overconsumptionWarnings.push({line, alerts: overAlerts});
+      return {line, cur:line.plan, rec:best, saving, reasons:buildReasons(line,best,hasWifi,minData,minMin,minSocial,minSpd), isOverconsumption:true, overAlerts};
+    }
     if(saving<10) return null;
 
     return {line, cur:line.plan, rec:best, saving, reasons:buildReasons(line,best,hasWifi,minData,minMin,minSocial,minSpd)};
