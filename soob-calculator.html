@@ -1443,6 +1443,7 @@ function genRecs(){
     });
 
     if(!wantSwitch) pool=pool.filter(p=>p.operator===line.op);
+    pool.sort((a,b)=>a.price-b.price);
 
     if(!pool.length){
       // No cheaper plan — check if overconsumption, then find the cheapest plan that covers actual usage
@@ -1462,9 +1463,8 @@ function genRecs(){
           return true;
         });
         if(!wantSwitch) upgradePool=upgradePool.filter(p=>p.operator===line.op);
-        const best=upgradePool
-          .map(p=>([scorePlan(p,line,minData,minMin,minSocial,hasWifi),p]))
-          .sort((a,b)=>b[0]-a[0]||a[1].price-b[1].price)[0]?.[1];
+        upgradePool.sort((a,b)=>a.price-b.price);
+        const best=upgradePool[0];
         if(best){
           const saving=line.plan.price-best.price; // negative = costs more
           return {line, cur:line.plan, rec:best, saving, reasons:buildReasons(line,best,hasWifi,minData,minMin,minSocial,minSpd), isOverconsumption:true, overAlerts};
@@ -1473,10 +1473,7 @@ function genRecs(){
       return null;
     }
 
-    const scored=pool.map(p=>([scorePlan(p,line,minData,minMin,minSocial,hasWifi),p]))
-      .sort((a,b)=>b[0]-a[0]||a[1].price-b[1].price);
-
-    const best=scored[0][1];
+    const best=pool[0];
     const saving=curPrice-best.price;
     if(saving<10) return null;
 
