@@ -954,7 +954,7 @@ function addLine(){
     dataLeft:null,
     minsLeft:null,
     socialDataLeft:null,
-    activationDate:null,
+    activationDate:null, _daysLeft:null,
     _consumedData:null,
     _consumedMins:null,
     _consumedSocial:null,
@@ -1038,15 +1038,24 @@ function renderQuestions(){
 
   const lineInputs = mob.map(l=>`
     <div class="question-card" id="qi_activation_${l.id}">
-      <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📅 متى جدّدت أو فعّلت باقتك؟</div>
-      <input type="date" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px;font-family:'Cairo',sans-serif"
-        id="activationDate_${l.id}"
-        max="${new Date().toISOString().split('T')[0]}"
-        value="${l.activationDate||''}"
-        onchange="updateActivationDate(${l.id}, this.value)">
-      <div style="font-size:11px;color:#aaa;margin-top:6px" id="activationDateInfo_${l.id}">
-        ${l.activationDate ? `فاضي <strong>${Math.max(1,Math.round((new Date()-new Date(l.activationDate))/(1000*60*60*24)))} يوم</strong> من تاريخ التفعيل` : 'هذا يساعدنا نحسب استهلاكك الشهري بدقة'}
+      <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📅 متى تنتهي باقتك؟</div>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start;margin-top:10px">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">تاريخ الانتهاء</div>
+          <input type="date" class="form-input" style="padding:9px 12px;border-radius:12px;font-family:'Cairo',sans-serif"
+            id="endDate_${l.id}"
+            min="${new Date().toISOString().split('T')[0]}"
+            oninput="onEndDateChange(${l.id}, this.value)">
+        </div>
+        <div style="text-align:center;font-weight:900;font-size:16px;padding-top:26px;color:#aaa">أو</div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">الأيام المتبقية</div>
+          <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+            id="daysLeft_${l.id}" placeholder="مثال: 15" min="1" max="365"
+            oninput="onDaysLeftChange(${l.id}, this.value)">
+        </div>
       </div>
+      <div style="font-size:11px;color:#aaa;margin-top:8px" id="activationDateInfo_${l.id}">هذا يساعدنا نحسب استهلاكك الشهري بدقة</div>
     </div>
     <div class="question-card" id="qi_data_${l.id}">
       <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📶 داتا الشهر</div>
@@ -1330,26 +1339,55 @@ function onSocialRemainingChange(id, planSocialGB, val){
 }
 
 function getDaysDiff(line){
+  if(line._daysLeft != null){
+    return Math.max(1, 30 - line._daysLeft);
+  }
   if(line.activationDate){
     const diff = Math.round((new Date() - new Date(line.activationDate)) / (1000*60*60*24));
     return Math.max(1, diff);
   }
-  // No activation date → treat consumed value as full monthly total (no scaling)
   return 30;
 }
 
-function updateActivationDate(id, val){
+function onEndDateChange(id, val){
   const line = userLines.find(l=>l.id===id);
   if(!line) return;
-  line.activationDate = val || null;
   const infoEl = document.getElementById('activationDateInfo_'+id);
-  if(infoEl && val){
-    const days = Math.max(1, Math.round((new Date()-new Date(val))/(1000*60*60*24)));
-    infoEl.innerHTML = `مضت <strong>${days} يوم</strong> من تاريخ التفعيل`;
+  const daysEl = document.getElementById('daysLeft_'+id);
+  if(!val){ line.activationDate=null; infoEl.textContent='هذا يساعدنا نحسب استهلاكك الشهري بدقة'; _regenRecs(); return; }
+  const daysLeft = Math.max(1, Math.round((new Date(val)-new Date())/(1000*60*60*24)));
+  const daysElapsed = 30 - daysLeft;
+  line.activationDate = daysElapsed > 0 ? new Date(Date.now() - daysElapsed*86400000).toISOString().split('T')[0] : null;
+  line._daysLeft = daysLeft;
+  daysEl.value = daysLeft;
+  infoEl.innerHTML = `باقيلك <strong>${daysLeft} يوم</strong> — مضى عليك ${Math.max(0,daysElapsed)} يوم من الشهر`;
+  _regenRecs();
+}
+
+function onDaysLeftChange(id, val){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  const infoEl = document.getElementById('activationDateInfo_'+id);
+  const dateEl = document.getElementById('endDate_'+id);
+  const days = parseInt(val);
+  if(isNaN(days) || val===''){
+    line.activationDate=null; line._daysLeft=null;
+    infoEl.textContent='هذا يساعدنا نحسب استهلاكك الشهري بدقة';
+    dateEl.value='';
+    _regenRecs(); return;
   }
-  const recs=genRecs();
-  renderRecs(recs);
-  updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+  const daysLeft = Math.max(1, days);
+  const daysElapsed = 30 - daysLeft;
+  line.activationDate = daysElapsed > 0 ? new Date(Date.now() - daysElapsed*86400000).toISOString().split('T')[0] : null;
+  line._daysLeft = daysLeft;
+  const endDate = new Date(Date.now() + daysLeft*86400000);
+  dateEl.value = endDate.toISOString().split('T')[0];
+  infoEl.innerHTML = `باقيلك <strong>${daysLeft} يوم</strong> — مضى عليك ${Math.max(0,daysElapsed)} يوم من الشهر`;
+  _regenRecs();
+}
+
+function _regenRecs(){
+  const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
 }
 
 function answer(qid,idx,el){
