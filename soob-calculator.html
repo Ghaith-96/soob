@@ -1235,8 +1235,8 @@ function getDaysDiff(line){
     const diff = Math.round((new Date() - new Date(line.activationDate)) / (1000*60*60*24));
     return Math.max(1, diff);
   }
-  // Fallback: day of month (old behaviour)
-  return new Date().getDate();
+  // No activation date → treat consumed value as full monthly total (no scaling)
+  return 30;
 }
 
 function updateActivationDate(id, val){
@@ -1462,8 +1462,9 @@ function genRecs(){
           return true;
         });
         if(!wantSwitch) upgradePool=upgradePool.filter(p=>p.operator===line.op);
-        upgradePool.sort((a,b)=>a.price-b.price);
-        const best=upgradePool[0];
+        const best=upgradePool
+          .map(p=>([scorePlan(p,line,minData,minMin,minSocial,hasWifi),p]))
+          .sort((a,b)=>b[0]-a[0]||a[1].price-b[1].price)[0]?.[1];
         if(best){
           const saving=line.plan.price-best.price; // negative = costs more
           return {line, cur:line.plan, rec:best, saving, reasons:buildReasons(line,best,hasWifi,minData,minMin,minSocial,minSpd), isOverconsumption:true, overAlerts};
@@ -1522,6 +1523,9 @@ function scorePlan(p, line, minData, minMin, minSocial, hasWifi){
 
   // ── Same operator ──
   if(p.operator===line.op) s+=3;
+
+  // ── Same payment type (prepaid stays prepaid) ──
+  if(p.paymentType && line.plan.paymentType && p.paymentType===line.plan.paymentType) s+=5;
 
   // ── Meaningful saving ──
   const savingPct=(line.plan.price-p.price)/line.plan.price;
