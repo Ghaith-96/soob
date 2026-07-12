@@ -1411,15 +1411,16 @@ function socialGB(plan){
   const s = String(plan.socialData);
   if(s.toLowerCase().includes('unlimited')) return 9999;
   if(typeof plan.socialData==='number') return plan.socialData;
-  return 0;
+  const m = s.match(/(\d+(?:\.\d+)?)/);
+  return m ? parseFloat(m[1]) : 0;
 }
 
 function planMins(plan){
-  if(!plan.minutes) return 9999;
+  if(!plan.minutes) return 0;  // no minutes field = no calls included
   const s = String(plan.minutes);
   if(s.toLowerCase().includes('unlimited')) return 9999;
   const m = s.match(/(\d+)/);
-  return m ? parseInt(m[1]) : 9999;
+  return m ? parseInt(m[1]) : 0;
 }
 
 const SPEED_MIN_MBPS=[100,300,500,1000];
