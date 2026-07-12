@@ -1059,53 +1059,73 @@ function renderQuestions(){
     </div>
     <div class="question-card" id="qi_data_${l.id}">
       <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📶 داتا الشهر</div>
-      <button type="button" onclick="toggleConsumedMode(${l.id})"
-        style="margin-top:10px;background:var(--paper);border:var(--border);border-radius:999px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer"
-        id="toggleBtn_${l.id}">أدخل بياناتك ←</button>
-      <div id="consumedMode_${l.id}" style="display:none;margin-top:14px">
-        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start">
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم استهلكت؟ (GB)</div>
-            <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
-              id="consumedInp_${l.id}" placeholder="مثال: 20" min="0" max="9999"
-              oninput="onDataConsumedChange(${l.id},${l.plan.data==='Unlimited'?9999:l.plan.data||0},this.value)">
+      ${(()=>{
+        const isUnlimitedData = l.plan.data==='Unlimited';
+        if(isUnlimitedData) return `
+          <input type="text" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px;background:var(--paper);color:#666"
+            value="Unlimited — غير محدودة" disabled>
+          <div style="font-size:11px;color:#aaa;margin-top:6px">باقتك فيها داتا غير محدودة ✅</div>
+        `;
+        return `
+          <button type="button" onclick="toggleConsumedMode(${l.id})"
+            style="margin-top:10px;background:var(--paper);border:var(--border);border-radius:999px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer"
+            id="toggleBtn_${l.id}">أدخل بياناتك ←</button>
+          <div id="consumedMode_${l.id}" style="display:none;margin-top:14px">
+            <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start">
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم استهلكت؟ (GB)</div>
+                <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+                  id="consumedInp_${l.id}" placeholder="مثال: 20" min="0" max="9999"
+                  oninput="onDataConsumedChange(${l.id},${l.plan.data||0},this.value)">
+              </div>
+              <div style="text-align:center;font-weight:900;font-size:16px;padding-top:26px;color:#aaa">أو</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم بقالك؟ (GB)</div>
+                <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+                  id="dataLeft_${l.id}" placeholder="مثال: 15" min="0" max="9999"
+                  value="${l.dataLeft!==null?l.dataLeft:''}"
+                  oninput="onDataRemainingChange(${l.id},${l.plan.data||0},this.value)">
+              </div>
+            </div>
+            <div id="consumedResult_${l.id}" style="font-size:12px;color:var(--deep);font-weight:700;margin-top:8px"></div>
           </div>
-          <div style="text-align:center;font-weight:900;font-size:16px;padding-top:26px;color:#aaa">أو</div>
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم بقالك؟ (GB)</div>
-            <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
-              id="dataLeft_${l.id}" placeholder="مثال: 15" min="0" max="9999"
-              value="${l.dataLeft!==null?l.dataLeft:''}"
-              oninput="onDataRemainingChange(${l.id},${l.plan.data==='Unlimited'?9999:l.plan.data||0},this.value)">
-          </div>
-        </div>
-        <div id="consumedResult_${l.id}" style="font-size:12px;color:var(--deep);font-weight:700;margin-top:8px"></div>
-      </div>
+        `;
+      })()}
     </div>
     <div class="question-card" id="qi_mins_${l.id}">
       <div class="q-label">${mob.length>1?`📱 ${OPERATOR_AR[l.op]||l.op} — ${l.plan.name}<br>`:''}📞 دقائق الشهر</div>
-      <button type="button" onclick="toggleMinsConsumedMode(${l.id})"
-        style="margin-top:10px;background:var(--paper);border:var(--border);border-radius:999px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer"
-        id="toggleMinsBtn_${l.id}">أدخل بياناتك ←</button>
-      <div id="consumedMinsMode_${l.id}" style="display:none;margin-top:14px">
-        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start">
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم استهلكت؟ (دقيقة)</div>
-            <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
-              id="consumedMinsInp_${l.id}" placeholder="مثال: 600" min="0" max="99999"
-              oninput="onMinsConsumedChange(${l.id},'${l.plan.minutes||''}',this.value)">
+      ${(()=>{
+        const isUnlimitedMins = !l.plan.minutes || String(l.plan.minutes).toLowerCase().includes('unlimited');
+        if(isUnlimitedMins) return `
+          <input type="text" class="form-input" style="margin-top:10px;padding:9px 12px;border-radius:12px;background:var(--paper);color:#666"
+            value="Unlimited — غير محدودة" disabled>
+          <div style="font-size:11px;color:#aaa;margin-top:6px">باقتك فيها دقائق غير محدودة ✅</div>
+        `;
+        return `
+          <button type="button" onclick="toggleMinsConsumedMode(${l.id})"
+            style="margin-top:10px;background:var(--paper);border:var(--border);border-radius:999px;padding:7px 16px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer"
+            id="toggleMinsBtn_${l.id}">أدخل بياناتك ←</button>
+          <div id="consumedMinsMode_${l.id}" style="display:none;margin-top:14px">
+            <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start">
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم استهلكت؟ (دقيقة)</div>
+                <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+                  id="consumedMinsInp_${l.id}" placeholder="مثال: 600" min="0" max="99999"
+                  oninput="onMinsConsumedChange(${l.id},'${l.plan.minutes||''}',this.value)">
+              </div>
+              <div style="text-align:center;font-weight:900;font-size:16px;padding-top:26px;color:#aaa">أو</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم بقالك؟ (دقيقة)</div>
+                <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
+                  id="minsLeft_${l.id}" placeholder="مثال: 400" min="0" max="99999"
+                  value="${l.minsLeft!==null?l.minsLeft:''}"
+                  oninput="onMinsRemainingChange(${l.id},'${l.plan.minutes||''}',this.value)">
+              </div>
+            </div>
+            <div id="consumedMinsResult_${l.id}" style="font-size:12px;color:var(--deep);font-weight:700;margin-top:8px"></div>
           </div>
-          <div style="text-align:center;font-weight:900;font-size:16px;padding-top:26px;color:#aaa">أو</div>
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#555;margin-bottom:6px">كم بقالك؟ (دقيقة)</div>
-            <input type="number" class="form-input" style="padding:9px 12px;border-radius:12px"
-              id="minsLeft_${l.id}" placeholder="مثال: 400" min="0" max="99999"
-              value="${l.minsLeft!==null?l.minsLeft:''}"
-              oninput="onMinsRemainingChange(${l.id},'${l.plan.minutes||''}',this.value)">
-          </div>
-        </div>
-        <div id="consumedMinsResult_${l.id}" style="font-size:12px;color:var(--deep);font-weight:700;margin-top:8px"></div>
-      </div>
+        `;
+      })()}
     </div>
     <div class="question-card" id="qi_social_${l.id}">
       ${(()=>{
@@ -1144,6 +1164,7 @@ function renderQuestions(){
         `;
       })()}
     </div>
+    <div id="consumptionSummary_${l.id}" style="display:none"></div>
   `).join('');
 
   document.getElementById('analysisQuestions').innerHTML=
@@ -1184,8 +1205,7 @@ function onDataConsumedChange(id, planGB, val){
   const resEl = document.getElementById('consumedResult_'+id);
   if(isNaN(consumed) || val===''){
     resEl.textContent=''; line._consumedData=null;
-    const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
-    return;
+    renderConsumptionSummary(id); _regenRecs(); return;
   }
   const daysDiff = getDaysDiff(line);
   const estimated = consumed * 30 / daysDiff;
@@ -1195,13 +1215,10 @@ function onDataConsumedChange(id, planGB, val){
     remEl.value = rem.toFixed(1);
     line.dataLeft = parseFloat(rem.toFixed(1));
     if(estimated > planGB)
-      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ استهلاكك المتوقع ${estimated.toFixed(1)} GB — يتجاوز باقتك (${planGB} GB)</span>`;
-    else
-      resEl.textContent=`استهلاكك الشهري المتوقع: ${estimated.toFixed(1)} GB`;
-  } else {
-    resEl.textContent=`استهلاكك الشهري المتوقع: ${estimated.toFixed(1)} GB`;
-  }
-  const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ يتجاوز باقتك (${planGB} GB)</span>`;
+    else resEl.textContent='';
+  } else resEl.textContent='';
+  renderConsumptionSummary(id); _regenRecs();
 }
 
 function onDataRemainingChange(id, planGB, val){
@@ -1210,18 +1227,21 @@ function onDataRemainingChange(id, planGB, val){
   const rem = parseFloat(val);
   const conEl = document.getElementById('consumedInp_'+id);
   const resEl = document.getElementById('consumedResult_'+id);
-  line._consumedData = null;
   if(isNaN(rem) || val===''){
-    line.dataLeft=null; resEl.textContent='';
-    const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
-    return;
+    line.dataLeft=null; line._consumedData=null; resEl.textContent='';
+    renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.dataLeft = rem;
   conEl.value = '';
-  if(planGB && planGB!==9999)
-    resEl.textContent=`استهلاكك: ${Math.max(0, planGB - rem).toFixed(1)} GB من أصل ${planGB} GB`;
-  else resEl.textContent='';
-  const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+  resEl.textContent='';
+  if(planGB && planGB!==9999){
+    const consumedSoFar = Math.max(0, planGB - rem);
+    const daysDiff = getDaysDiff(line);
+    line._consumedData = consumedSoFar * 30 / daysDiff;
+  } else {
+    line._consumedData = null;
+  }
+  renderConsumptionSummary(id); _regenRecs();
 }
 
 function toggleMinsConsumedMode(id){
@@ -1241,8 +1261,7 @@ function onMinsConsumedChange(id, planMinsRaw, val){
   const planMinsNum = (planMinsRaw && planMinsRaw!=='Unlimited') ? parseFloat(planMinsRaw) : null;
   if(isNaN(consumed) || val===''){
     resEl.textContent=''; line._consumedMins=null;
-    const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
-    return;
+    renderConsumptionSummary(id); _regenRecs(); return;
   }
   const daysDiff = getDaysDiff(line);
   const estimated = consumed * 30 / daysDiff;
@@ -1252,13 +1271,10 @@ function onMinsConsumedChange(id, planMinsRaw, val){
     remEl.value = Math.round(rem);
     line.minsLeft = Math.round(rem);
     if(estimated > planMinsNum)
-      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ استهلاكك المتوقع ${Math.round(estimated)} دقيقة — يتجاوز باقتك (${planMinsNum} دقيقة)</span>`;
-    else
-      resEl.textContent=`استهلاكك الشهري المتوقع: ${Math.round(estimated)} دقيقة`;
-  } else {
-    resEl.textContent=`استهلاكك الشهري المتوقع: ${Math.round(estimated)} دقيقة`;
-  }
-  const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ يتجاوز باقتك (${planMinsNum} دقيقة)</span>`;
+    else resEl.textContent='';
+  } else resEl.textContent='';
+  renderConsumptionSummary(id); _regenRecs();
 }
 
 function onMinsRemainingChange(id, planMinsRaw, val){
@@ -1268,18 +1284,21 @@ function onMinsRemainingChange(id, planMinsRaw, val){
   const conEl = document.getElementById('consumedMinsInp_'+id);
   const resEl = document.getElementById('consumedMinsResult_'+id);
   const planMinsNum = (planMinsRaw && planMinsRaw!=='Unlimited') ? parseFloat(planMinsRaw) : null;
-  line._consumedMins = null;
   if(isNaN(rem) || val===''){
-    line.minsLeft=null; resEl.textContent='';
-    const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
-    return;
+    line.minsLeft=null; line._consumedMins=null; resEl.textContent='';
+    renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.minsLeft = Math.round(rem);
   conEl.value = '';
-  if(planMinsNum)
-    resEl.textContent=`استهلاكك: ${Math.max(0, planMinsNum - rem)} دقيقة من أصل ${planMinsNum} دقيقة`;
-  else resEl.textContent='';
-  const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+  resEl.textContent='';
+  if(planMinsNum){
+    const consumedSoFar = Math.max(0, planMinsNum - rem);
+    const daysDiff = getDaysDiff(line);
+    line._consumedMins = consumedSoFar * 30 / daysDiff;
+  } else {
+    line._consumedMins = null;
+  }
+  renderConsumptionSummary(id); _regenRecs();
 }
 
 function toggleSocialConsumedMode(id){
@@ -1298,8 +1317,7 @@ function onSocialConsumedChange(id, planSocialGB, val){
   const resEl = document.getElementById('consumedSocialResult_'+id);
   if(isNaN(consumed) || val===''){
     resEl.textContent=''; line._consumedSocial=null;
-    const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
-    return;
+    renderConsumptionSummary(id); _regenRecs(); return;
   }
   const daysDiff = getDaysDiff(line);
   const estimated = consumed * 30 / daysDiff;
@@ -1309,13 +1327,10 @@ function onSocialConsumedChange(id, planSocialGB, val){
     remEl.value = rem.toFixed(1);
     line.socialDataLeft = parseFloat(rem.toFixed(1));
     if(estimated > planSocialGB)
-      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ استهلاكك المتوقع ${estimated.toFixed(1)} GB — يتجاوز باقتك (${planSocialGB} GB)</span>`;
-    else
-      resEl.textContent=`استهلاكك الشهري المتوقع: ${estimated.toFixed(1)} GB سوشيال`;
-  } else {
-    resEl.textContent=`استهلاكك الشهري المتوقع: ${estimated.toFixed(1)} GB سوشيال`;
-  }
-  const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ يتجاوز باقتك (${planSocialGB} GB)</span>`;
+    else resEl.textContent='';
+  } else resEl.textContent='';
+  renderConsumptionSummary(id); _regenRecs();
 }
 
 function onSocialRemainingChange(id, planSocialGB, val){
@@ -1324,18 +1339,21 @@ function onSocialRemainingChange(id, planSocialGB, val){
   const rem = parseFloat(val);
   const conEl = document.getElementById('consumedSocialInp_'+id);
   const resEl = document.getElementById('consumedSocialResult_'+id);
-  line._consumedSocial = null;
   if(isNaN(rem) || val===''){
-    line.socialDataLeft=null; resEl.textContent='';
-    const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
-    return;
+    line.socialDataLeft=null; line._consumedSocial=null; resEl.textContent='';
+    renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.socialDataLeft = parseFloat(rem);
   conEl.value = '';
-  if(planSocialGB)
-    resEl.textContent=`استهلاكك: ${Math.max(0, planSocialGB - rem).toFixed(1)} GB من أصل ${planSocialGB} GB سوشيال`;
-  else resEl.textContent='';
-  const recs=genRecs(); renderRecs(recs); updateSavings(Math.round(recs.reduce((s,r)=>s+r.saving,0)*12));
+  resEl.textContent='';
+  if(planSocialGB && planSocialGB!==9999){
+    const consumedSoFar = Math.max(0, planSocialGB - rem);
+    const daysDiff = getDaysDiff(line);
+    line._consumedSocial = consumedSoFar * 30 / daysDiff;
+  } else {
+    line._consumedSocial = null;
+  }
+  renderConsumptionSummary(id); _regenRecs();
 }
 
 function getDaysDiff(line){
@@ -1371,6 +1389,7 @@ function _recalcConsumedFields(id){
     const pSocGB = socialGB(line.plan);
     onSocialConsumedChange(id, pSocGB||0, socialInp.value);
   }
+  renderConsumptionSummary(id);
 }
 
 function onEndDateChange(id, val){
@@ -1408,6 +1427,59 @@ function onDaysLeftChange(id, val){
   infoEl.innerHTML = `باقيلك <strong>${daysLeft} يوم</strong> — مضى عليك ${Math.max(0,30-daysLeft)} يوم من الشهر`;
   _applyDaysLeft(id, daysLeft);
   _regenRecs();
+}
+
+function renderConsumptionSummary(id){
+  const line = userLines.find(l=>l.id===id);
+  const el = document.getElementById('consumptionSummary_'+id);
+  if(!line || !el) return;
+
+  const hasData   = line._consumedData  !== null;
+  const hasMins   = line._consumedMins  !== null;
+  const hasSocial = line._consumedSocial !== null;
+  if(!hasData && !hasMins && !hasSocial){ el.style.display='none'; return; }
+
+  const daysDiff  = getDaysDiff(line);
+  const daysLeft  = line._daysLeft || (30 - daysDiff);
+  const daysLabel = daysDiff < 30 ? `بناءً على استهلاكك خلال <strong>${daysDiff} يوم</strong>` : 'بناءً على استهلاكك المُدخل';
+
+  function row(icon, label, val, limit, unit){
+    if(val === null) return '';
+    const over = limit && limit !== 9999 && val > limit;
+    const pct  = (limit && limit !== 9999) ? Math.round(val/limit*100) : null;
+    const barW = pct !== null ? Math.min(100,pct) : null;
+    const barColor = over ? '#ef4444' : (pct>80 ? '#f59e0b' : '#22c55e');
+    return `
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:14px;font-weight:800">${icon} ${label}</span>
+          <span style="font-size:15px;font-weight:900;color:${over?'#dc2626':'#1e3a5f'}">
+            ${unit==='min'?Math.round(val).toLocaleString('ar-SA'):val.toFixed(1)} ${unit==='min'?'دقيقة':'GB'}
+            ${limit && limit!==9999 ? `<span style="font-size:12px;color:#888;font-weight:600"> / ${unit==='min'?limit.toLocaleString('ar-SA'):limit} ${unit==='min'?'دقيقة':'GB'}</span>` : ''}
+          </span>
+        </div>
+        ${barW!==null ? `
+          <div style="height:8px;background:#e5e7eb;border-radius:99px;overflow:hidden">
+            <div style="height:100%;width:${barW}%;background:${barColor};border-radius:99px;transition:width .4s"></div>
+          </div>
+          ${over ? `<div style="font-size:11px;color:#dc2626;font-weight:700;margin-top:4px">⚠️ يتجاوز باقتك بـ ${unit==='min'?Math.round(val-limit).toLocaleString('ar-SA'):( val-limit).toFixed(1)} ${unit==='min'?'دقيقة':'GB'}</div>` : ''}
+        ` : ''}
+      </div>`;
+  }
+
+  const planData   = dataGB(line.plan);
+  const planMinsV  = planMins(line.plan);
+  const planSocial = socialGB(line.plan);
+
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div style="margin-top:0;background:#f0f9ff;border:2px solid #38bdf8;border-radius:20px;padding:24px 22px">
+      <div style="font-size:13px;font-weight:800;color:#0369a1;margin-bottom:16px">📊 توقع استهلاكك الشهري</div>
+      ${row('📶','داتا',  hasData  ? line._consumedData  : null, planData===9999?null:planData, 'gb')}
+      ${row('📞','دقائق', hasMins  ? line._consumedMins  : null, planMinsV===9999||planMinsV===0?null:planMinsV, 'min')}
+      ${row('📲','سوشيال',hasSocial? line._consumedSocial: null, planSocial===9999||planSocial===0?null:planSocial,'gb')}
+      <div style="font-size:11px;color:#64748b;border-top:1px solid #bae6fd;padding-top:10px;margin-top:4px">${daysLabel}${daysLeft>0&&daysDiff<30?` — باقيلك <strong>${daysLeft} يوم</strong>`:''}</div>
+    </div>`;
 }
 
 function _regenRecs(){
