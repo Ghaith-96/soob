@@ -1221,10 +1221,11 @@ function onDataConsumedChange(id, planGB, val){
   renderConsumptionSummary(id); _regenRecs();
 }
 
-function onDataRemainingChange(id, planGB, val){
+function onDataRemainingChange(id, _unused, val){
   const line = userLines.find(l=>l.id===id);
   if(!line) return;
   const rem = parseFloat(val);
+  const planGB = dataGB(line.plan);
   const conEl = document.getElementById('consumedInp_'+id);
   const resEl = document.getElementById('consumedResult_'+id);
   if(isNaN(rem) || val===''){
@@ -1236,8 +1237,7 @@ function onDataRemainingChange(id, planGB, val){
   resEl.textContent='';
   if(planGB && planGB!==9999){
     const consumedSoFar = Math.max(0, planGB - rem);
-    const daysDiff = getDaysDiff(line);
-    line._consumedData = consumedSoFar * 30 / daysDiff;
+    line._consumedData = consumedSoFar * 30 / getDaysDiff(line);
   } else {
     line._consumedData = null;
   }
@@ -1277,13 +1277,13 @@ function onMinsConsumedChange(id, planMinsRaw, val){
   renderConsumptionSummary(id); _regenRecs();
 }
 
-function onMinsRemainingChange(id, planMinsRaw, val){
+function onMinsRemainingChange(id, _unused, val){
   const line = userLines.find(l=>l.id===id);
   if(!line) return;
   const rem = parseFloat(val);
+  const planMinsNum = planMins(line.plan);
   const conEl = document.getElementById('consumedMinsInp_'+id);
   const resEl = document.getElementById('consumedMinsResult_'+id);
-  const planMinsNum = (planMinsRaw && planMinsRaw!=='Unlimited') ? parseFloat(planMinsRaw) : null;
   if(isNaN(rem) || val===''){
     line.minsLeft=null; line._consumedMins=null; resEl.textContent='';
     renderConsumptionSummary(id); _regenRecs(); return;
@@ -1291,10 +1291,9 @@ function onMinsRemainingChange(id, planMinsRaw, val){
   line.minsLeft = Math.round(rem);
   conEl.value = '';
   resEl.textContent='';
-  if(planMinsNum){
+  if(planMinsNum && planMinsNum!==9999){
     const consumedSoFar = Math.max(0, planMinsNum - rem);
-    const daysDiff = getDaysDiff(line);
-    line._consumedMins = consumedSoFar * 30 / daysDiff;
+    line._consumedMins = consumedSoFar * 30 / getDaysDiff(line);
   } else {
     line._consumedMins = null;
   }
@@ -1333,10 +1332,11 @@ function onSocialConsumedChange(id, planSocialGB, val){
   renderConsumptionSummary(id); _regenRecs();
 }
 
-function onSocialRemainingChange(id, planSocialGB, val){
+function onSocialRemainingChange(id, _unused, val){
   const line = userLines.find(l=>l.id===id);
   if(!line) return;
   const rem = parseFloat(val);
+  const planSocialGB = socialGB(line.plan);
   const conEl = document.getElementById('consumedSocialInp_'+id);
   const resEl = document.getElementById('consumedSocialResult_'+id);
   if(isNaN(rem) || val===''){
@@ -1348,8 +1348,7 @@ function onSocialRemainingChange(id, planSocialGB, val){
   resEl.textContent='';
   if(planSocialGB && planSocialGB!==9999){
     const consumedSoFar = Math.max(0, planSocialGB - rem);
-    const daysDiff = getDaysDiff(line);
-    line._consumedSocial = consumedSoFar * 30 / daysDiff;
+    line._consumedSocial = consumedSoFar * 30 / getDaysDiff(line);
   } else {
     line._consumedSocial = null;
   }
@@ -1380,15 +1379,19 @@ function _applyDaysLeft(id, daysLeft){
 function _recalcConsumedFields(id){
   const line = userLines.find(l=>l.id===id);
   if(!line) return;
-  const dataInp  = document.getElementById('consumedInp_'+id);
-  const minsInp  = document.getElementById('consumedMinsInp_'+id);
-  const socialInp= document.getElementById('consumedSocialInp_'+id);
-  if(dataInp  && dataInp.value  !== '') onDataConsumedChange(id, dataGB(line.plan)===9999?9999:dataGB(line.plan), dataInp.value);
-  if(minsInp  && minsInp.value  !== '') onMinsConsumedChange(id, line.plan.minutes||'', minsInp.value);
-  if(socialInp && socialInp.value !== ''){
-    const pSocGB = socialGB(line.plan);
-    onSocialConsumedChange(id, pSocGB||0, socialInp.value);
-  }
+  const dataInp    = document.getElementById('consumedInp_'+id);
+  const dataRemInp = document.getElementById('dataLeft_'+id);
+  const minsInp    = document.getElementById('consumedMinsInp_'+id);
+  const minsRemInp = document.getElementById('minsLeft_'+id);
+  const socialInp  = document.getElementById('consumedSocialInp_'+id);
+  const socialRemInp = document.getElementById('socialLeft_'+id);
+  // Consumed box takes priority; otherwise recalc from remaining
+  if(dataInp    && dataInp.value    !== '') onDataConsumedChange(id, dataGB(line.plan), dataInp.value);
+  else if(dataRemInp && dataRemInp.value !== '') onDataRemainingChange(id, null, dataRemInp.value);
+  if(minsInp    && minsInp.value    !== '') onMinsConsumedChange(id, line.plan.minutes||'', minsInp.value);
+  else if(minsRemInp && minsRemInp.value !== '') onMinsRemainingChange(id, null, minsRemInp.value);
+  if(socialInp  && socialInp.value  !== '') onSocialConsumedChange(id, socialGB(line.plan), socialInp.value);
+  else if(socialRemInp && socialRemInp.value !== '') onSocialRemainingChange(id, null, socialRemInp.value);
   renderConsumptionSummary(id);
 }
 
