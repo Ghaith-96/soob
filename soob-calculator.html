@@ -1349,18 +1349,44 @@ function getDaysDiff(line){
   return 30;
 }
 
+function _applyDaysLeft(id, daysLeft){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  const daysElapsed = 30 - daysLeft;
+  line._daysLeft = daysLeft;
+  line.activationDate = daysElapsed > 0 ? new Date(Date.now() - daysElapsed*86400000).toISOString().split('T')[0] : null;
+  // Recalculate any already-entered consumed values with the new days elapsed
+  _recalcConsumedFields(id);
+}
+
+function _recalcConsumedFields(id){
+  const line = userLines.find(l=>l.id===id);
+  if(!line) return;
+  const dataInp  = document.getElementById('consumedInp_'+id);
+  const minsInp  = document.getElementById('consumedMinsInp_'+id);
+  const socialInp= document.getElementById('consumedSocialInp_'+id);
+  if(dataInp  && dataInp.value  !== '') onDataConsumedChange(id, dataGB(line.plan)===9999?9999:dataGB(line.plan), dataInp.value);
+  if(minsInp  && minsInp.value  !== '') onMinsConsumedChange(id, line.plan.minutes||'', minsInp.value);
+  if(socialInp && socialInp.value !== ''){
+    const pSocGB = socialGB(line.plan);
+    onSocialConsumedChange(id, pSocGB||0, socialInp.value);
+  }
+}
+
 function onEndDateChange(id, val){
   const line = userLines.find(l=>l.id===id);
   if(!line) return;
   const infoEl = document.getElementById('activationDateInfo_'+id);
   const daysEl = document.getElementById('daysLeft_'+id);
-  if(!val){ line.activationDate=null; infoEl.textContent='هذا يساعدنا نحسب استهلاكك الشهري بدقة'; _regenRecs(); return; }
+  if(!val){
+    line.activationDate=null; line._daysLeft=null;
+    infoEl.textContent='هذا يساعدنا نحسب استهلاكك الشهري بدقة';
+    _regenRecs(); return;
+  }
   const daysLeft = Math.max(1, Math.round((new Date(val)-new Date())/(1000*60*60*24)));
-  const daysElapsed = 30 - daysLeft;
-  line.activationDate = daysElapsed > 0 ? new Date(Date.now() - daysElapsed*86400000).toISOString().split('T')[0] : null;
-  line._daysLeft = daysLeft;
   daysEl.value = daysLeft;
-  infoEl.innerHTML = `باقيلك <strong>${daysLeft} يوم</strong> — مضى عليك ${Math.max(0,daysElapsed)} يوم من الشهر`;
+  infoEl.innerHTML = `باقيلك <strong>${daysLeft} يوم</strong> — مضى عليك ${Math.max(0,30-daysLeft)} يوم من الشهر`;
+  _applyDaysLeft(id, daysLeft);
   _regenRecs();
 }
 
@@ -1377,12 +1403,10 @@ function onDaysLeftChange(id, val){
     _regenRecs(); return;
   }
   const daysLeft = Math.max(1, days);
-  const daysElapsed = 30 - daysLeft;
-  line.activationDate = daysElapsed > 0 ? new Date(Date.now() - daysElapsed*86400000).toISOString().split('T')[0] : null;
-  line._daysLeft = daysLeft;
   const endDate = new Date(Date.now() + daysLeft*86400000);
   dateEl.value = endDate.toISOString().split('T')[0];
-  infoEl.innerHTML = `باقيلك <strong>${daysLeft} يوم</strong> — مضى عليك ${Math.max(0,daysElapsed)} يوم من الشهر`;
+  infoEl.innerHTML = `باقيلك <strong>${daysLeft} يوم</strong> — مضى عليك ${Math.max(0,30-daysLeft)} يوم من الشهر`;
+  _applyDaysLeft(id, daysLeft);
   _regenRecs();
 }
 
