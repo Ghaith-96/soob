@@ -1366,7 +1366,8 @@ function getDaysDiff(line){
     const diff = Math.round((new Date() - new Date(line.activationDate)) / (1000*60*60*24));
     return Math.max(1, diff);
   }
-  return 30;
+  // Default: use current day of month so projection is meaningful without manual date entry
+  return Math.max(1, new Date().getDate());
 }
 
 function _applyDaysLeft(id, daysLeft){
@@ -1446,8 +1447,8 @@ function renderConsumptionSummary(id){
   if(!hasData && !hasMins && !hasSocial){ el.style.display='none'; return; }
 
   const daysDiff  = getDaysDiff(line);
-  const daysLeft  = line._daysLeft || (30 - daysDiff);
-  const daysLabel = daysDiff < 30 ? `بناءً على استهلاكك خلال <strong>${daysDiff} يوم</strong>` : 'بناءً على استهلاكك المُدخل';
+  const daysLeft  = line._daysLeft != null ? line._daysLeft : Math.max(0, 30 - daysDiff);
+  const daysLabel = `بناءً على استهلاكك خلال <strong>${daysDiff} يوم</strong>`;
 
   function row(icon, label, val, limit, unit){
     if(val === null) return '';
