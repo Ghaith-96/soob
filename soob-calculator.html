@@ -1215,9 +1215,12 @@ function onDataConsumedChange(id, planGB, val){
     remEl.value = rem.toFixed(1);
     line.dataLeft = parseFloat(rem.toFixed(1));
     if(estimated > planGB)
-      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ يتجاوز باقتك (${planGB} GB)</span>`;
-    else resEl.textContent='';
-  } else resEl.textContent='';
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ توقع استهلاكك الشهري ${estimated.toFixed(1)} GB — يتجاوز باقتك (${planGB} GB)</span>`;
+    else
+      resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${estimated.toFixed(1)} GB</strong> من أصل ${planGB} GB</span>`;
+  } else {
+    resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${estimated.toFixed(1)} GB</strong></span>`;
+  }
   renderConsumptionSummary(id); _regenRecs();
 }
 
@@ -1233,14 +1236,20 @@ function onDataRemainingChange(id, _unused, val){
     renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.dataLeft = rem;
-  resEl.textContent='';
   if(planGB && planGB!==9999){
     const consumedSoFar = Math.max(0, planGB - rem);
     conEl.value = consumedSoFar.toFixed(1);
-    line._consumedData = consumedSoFar * 30 / getDaysDiff(line);
+    const daysDiff = getDaysDiff(line);
+    const estimated = consumedSoFar * 30 / daysDiff;
+    line._consumedData = estimated;
+    if(estimated > planGB)
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ توقع استهلاكك الشهري ${estimated.toFixed(1)} GB — يتجاوز باقتك (${planGB} GB)</span>`;
+    else
+      resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${estimated.toFixed(1)} GB</strong> من أصل ${planGB} GB</span>`;
   } else {
     conEl.value = '';
     line._consumedData = null;
+    resEl.textContent='';
   }
   renderConsumptionSummary(id); _regenRecs();
 }
@@ -1272,9 +1281,12 @@ function onMinsConsumedChange(id, planMinsRaw, val){
     remEl.value = Math.round(rem);
     line.minsLeft = Math.round(rem);
     if(estimated > planMinsNum)
-      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ يتجاوز باقتك (${planMinsNum} دقيقة)</span>`;
-    else resEl.textContent='';
-  } else resEl.textContent='';
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ توقع استهلاكك الشهري ${Math.round(estimated)} دقيقة — يتجاوز باقتك (${planMinsNum} دقيقة)</span>`;
+    else
+      resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${Math.round(estimated)} دقيقة</strong> من أصل ${planMinsNum} دقيقة</span>`;
+  } else {
+    resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${Math.round(estimated)} دقيقة</strong></span>`;
+  }
   renderConsumptionSummary(id); _regenRecs();
 }
 
@@ -1290,14 +1302,20 @@ function onMinsRemainingChange(id, _unused, val){
     renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.minsLeft = Math.round(rem);
-  resEl.textContent='';
   if(planMinsNum && planMinsNum!==9999){
     const consumedSoFar = Math.max(0, planMinsNum - rem);
     conEl.value = Math.round(consumedSoFar);
-    line._consumedMins = consumedSoFar * 30 / getDaysDiff(line);
+    const daysDiff = getDaysDiff(line);
+    const estimated = consumedSoFar * 30 / daysDiff;
+    line._consumedMins = estimated;
+    if(estimated > planMinsNum)
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ توقع استهلاكك الشهري ${Math.round(estimated)} دقيقة — يتجاوز باقتك (${planMinsNum} دقيقة)</span>`;
+    else
+      resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${Math.round(estimated)} دقيقة</strong> من أصل ${planMinsNum} دقيقة</span>`;
   } else {
     conEl.value = '';
     line._consumedMins = null;
+    resEl.textContent='';
   }
   renderConsumptionSummary(id); _regenRecs();
 }
@@ -1328,9 +1346,12 @@ function onSocialConsumedChange(id, planSocialGB, val){
     remEl.value = rem.toFixed(1);
     line.socialDataLeft = parseFloat(rem.toFixed(1));
     if(estimated > planSocialGB)
-      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ يتجاوز باقتك (${planSocialGB} GB)</span>`;
-    else resEl.textContent='';
-  } else resEl.textContent='';
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ توقع استهلاكك الشهري ${estimated.toFixed(1)} GB — يتجاوز باقتك (${planSocialGB} GB)</span>`;
+    else
+      resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${estimated.toFixed(1)} GB</strong> من أصل ${planSocialGB} GB سوشيال</span>`;
+  } else {
+    resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${estimated.toFixed(1)} GB</strong> سوشيال</span>`;
+  }
   renderConsumptionSummary(id); _regenRecs();
 }
 
@@ -1346,14 +1367,20 @@ function onSocialRemainingChange(id, _unused, val){
     renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.socialDataLeft = parseFloat(rem);
-  resEl.textContent='';
   if(planSocialGB && planSocialGB!==9999){
     const consumedSoFar = Math.max(0, planSocialGB - rem);
     conEl.value = consumedSoFar.toFixed(1);
-    line._consumedSocial = consumedSoFar * 30 / getDaysDiff(line);
+    const daysDiff = getDaysDiff(line);
+    const estimated = consumedSoFar * 30 / daysDiff;
+    line._consumedSocial = estimated;
+    if(estimated > planSocialGB)
+      resEl.innerHTML=`<span style="color:#b91c1c;font-weight:800">⚠️ توقع استهلاكك الشهري ${estimated.toFixed(1)} GB — يتجاوز باقتك (${planSocialGB} GB)</span>`;
+    else
+      resEl.innerHTML=`<span style="color:#0369a1;font-weight:700">📊 توقع استهلاكك الشهري: <strong>${estimated.toFixed(1)} GB</strong> من أصل ${planSocialGB} GB سوشيال</span>`;
   } else {
     conEl.value = '';
     line._consumedSocial = null;
+    resEl.textContent='';
   }
   renderConsumptionSummary(id); _regenRecs();
 }
