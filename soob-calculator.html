@@ -1233,12 +1233,13 @@ function onDataRemainingChange(id, _unused, val){
     renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.dataLeft = rem;
-  conEl.value = '';
   resEl.textContent='';
   if(planGB && planGB!==9999){
     const consumedSoFar = Math.max(0, planGB - rem);
+    conEl.value = consumedSoFar.toFixed(1);
     line._consumedData = consumedSoFar * 30 / getDaysDiff(line);
   } else {
+    conEl.value = '';
     line._consumedData = null;
   }
   renderConsumptionSummary(id); _regenRecs();
@@ -1289,12 +1290,13 @@ function onMinsRemainingChange(id, _unused, val){
     renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.minsLeft = Math.round(rem);
-  conEl.value = '';
   resEl.textContent='';
   if(planMinsNum && planMinsNum!==9999){
     const consumedSoFar = Math.max(0, planMinsNum - rem);
+    conEl.value = Math.round(consumedSoFar);
     line._consumedMins = consumedSoFar * 30 / getDaysDiff(line);
   } else {
+    conEl.value = '';
     line._consumedMins = null;
   }
   renderConsumptionSummary(id); _regenRecs();
@@ -1344,12 +1346,13 @@ function onSocialRemainingChange(id, _unused, val){
     renderConsumptionSummary(id); _regenRecs(); return;
   }
   line.socialDataLeft = parseFloat(rem);
-  conEl.value = '';
   resEl.textContent='';
   if(planSocialGB && planSocialGB!==9999){
     const consumedSoFar = Math.max(0, planSocialGB - rem);
+    conEl.value = consumedSoFar.toFixed(1);
     line._consumedSocial = consumedSoFar * 30 / getDaysDiff(line);
   } else {
+    conEl.value = '';
     line._consumedSocial = null;
   }
   renderConsumptionSummary(id); _regenRecs();
